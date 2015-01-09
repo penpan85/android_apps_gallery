@@ -39,6 +39,13 @@ import com.android.gallery3d.data.Path;
 import com.android.gallery3d.picasasource.PicasaSource;
 import com.android.gallery3d.util.GalleryUtils;
 
+/**
+ * @author pengpan
+ * gallery整体都只由此activity负责页面的显示，相册使用的各种子页面都由其内部stateManager负责切换
+ * getStateManager()得到statemanager实例，进一步调用statemanager的startState()
+ * 方法初始化某个子页面并显示
+ *
+ */
 public final class GalleryActivity extends AbstractGalleryActivity implements OnCancelListener {
     public static final String EXTRA_SLIDESHOW = "slideshow";
     public static final String EXTRA_DREAM = "dream";

@@ -41,6 +41,11 @@ import com.android.gallery3d.util.FutureListener;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * @author pengpan
+ * 相片全屏显示页面
+ *
+ */
 public class SlideshowPage extends ActivityState {
     private static final String TAG = "SlideshowPage";
 

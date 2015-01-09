@@ -78,6 +78,11 @@ import com.android.gallery3d.util.ViewGifImage;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * @author pengpan
+ * 单张图片展示页面
+ *
+ */
 public abstract class PhotoPage extends ActivityState implements
         PhotoView.Listener, AppBridge.Server, ShareActionProvider.OnShareTargetSelectedListener,
         PhotoPageBottomControls.Delegate, GalleryActionBar.OnAlbumModeSelectedListener {

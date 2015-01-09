@@ -39,6 +39,12 @@ import com.android.gallery3d.ui.GLView;
 import com.android.gallery3d.ui.PreparePageFadeoutTexture;
 import com.android.gallery3d.util.GalleryUtils;
 
+/**
+ * @author pengpan
+ * 相册缩略图页面，相片缩略图页，单张图片页面，全屏相片页的父类
+ * 各种不同的activityState由stateManager管理
+ * 
+ */
 abstract public class ActivityState {
     protected static final int FLAG_HIDE_ACTION_BAR = 1;
     protected static final int FLAG_HIDE_STATUS_BAR = 2;

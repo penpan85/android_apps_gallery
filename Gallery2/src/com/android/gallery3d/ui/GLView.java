@@ -112,6 +112,10 @@ public class GLView {
     }
 
     // This should only be called on the content pane (the topmost GLView).
+    /**
+     * @param root
+     * 让当前所有的GLView都能够与glRoot相关联起来
+     */
     public void attachToRoot(GLRoot root) {
         Utils.assertTrue(mParent == null && mRoot == null);
         onAttachToRoot(root);
@@ -216,6 +220,7 @@ public class GLView {
             mParent.requestLayout();
         } else {
             // Is this a content pane ?
+        	//如果单纯只是显示某张图片，非容器类型的GLView,直接请求重绘
             GLRoot root = getGLRoot();
             if (root != null) root.requestLayoutContentPane();
         }

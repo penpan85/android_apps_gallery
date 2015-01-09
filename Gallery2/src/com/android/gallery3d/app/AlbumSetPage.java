@@ -66,6 +66,11 @@ import com.android.gallery3d.util.HelpUtils;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+/**
+ * @author pengpan
+ * 相册缩略图页面
+ * 一个gridview页面，每个Item对应一个相册缩略图，相册缩略图由该相册内前四张图片的缩略图拼接而成
+ */
 public class AlbumSetPage extends ActivityState implements
         SelectionManager.SelectionListener, GalleryActionBar.ClusterRunner,
         EyePosition.EyePositionListener, MediaSet.SyncListener {

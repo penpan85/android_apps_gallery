@@ -59,6 +59,37 @@ import javax.microedition.khronos.opengles.GL11;
 // (1) The public methods of HeadUpDisplay
 // (2) The public methods of CameraHeadUpDisplay
 // (3) The overridden methods in GLRootView.
+
+/**
+ * @author pengpan
+ * glsurfaceview:
+ * android.opengl的核心类，
+ * 1.起到连接OpenGL ES 与android 的view层次结构之间的桥梁作用
+ * 2.使得 Open GL ES库 适用于Android系统的Activity生命周期
+ * 3.使得选择合适的Frame Buffer像素格式更加容易
+ * 4.创建和管理单独绘图线程达到平滑动画效果
+ * 5.提供了方便使用的调试工具跟踪OpenGL ES函数调用以帮助检查错误
+ * 
+ * 一般情况下，我们只需要实现接口Renderer接口即可进行opengl绘制
+ * 、关心三个回调方法:
+ *  onSurfaceCreated(GL10 gl,EGLConfig config)
+ *  主要设置一些绘制补偿变化的参数，背景色，是否打开z-buffer
+ *  onDrawFrame(GL10 gl)
+ *  定义实际的绘图操作
+ *  onSurfaceChanged(GL10 gl,int width,int height)
+ *  通常发生在转屏幕的时候
+ *  
+ *  
+ *  setDebugFlags(int) 设置Debug标志。
+ *	setEGLConfigChooser (boolean) 选择一个Config接近16bitRGB颜色模式，可以打开或关闭深度(Depth)Buffer ,缺省为RGB_565 并打开至少有16bit 的 depth Buffer.
+ *	setEGLConfigChooser(EGLConfigChooser)  选择自定义EGLConfigChooser。
+ *	setEGLConfigChooser(int, int, int, int, int, int) 指定red ,green, blue, alpha, depth ,stencil 支持的位数，缺省为RGB_565 ,16 bit depth buffer.
+ *	GLSurfaceView 缺省创建为RGB_565 颜色格式的Surface ,如果需要支持透明度，可以调用getHolder().setFormat(PixelFormat.TRANSLUCENT).
+ *  GLSurfaceView 的渲染模式有两种，一种是连续不断的更新屏幕，另一种为on-demand ，只有在调用requestRender()  在更新屏幕。 缺省为RENDERMODE_CONTINUOUSLY 持续刷新屏幕
+ *  
+ *  关键性的方法  onDrawFrameLocked(GL10 gl),当有重绘的需求时，此方法会逐级调用glview.render(GL10 gl) 来绘制所有的页面元素
+ *  
+ */
 public class GLRootView extends GLSurfaceView
         implements GLSurfaceView.Renderer, GLRoot {
     private static final String TAG = "GLRootView";
@@ -80,6 +111,7 @@ public class GLRootView extends GLSurfaceView
 
     private GL11 mGL;
     private GLCanvas mCanvas;
+    //最根级的glView
     private GLView mContentView;
 
     private OrientationSource mOrientationSource;
@@ -119,12 +151,18 @@ public class GLRootView extends GLSurfaceView
         super(context, attrs);
         mFlags |= FLAG_INITIALIZED;
         setBackgroundDrawable(null);
+        //创建一个opengl es 2.0的context,3.0以上用2.0,否则用1.0
         setEGLContextClientVersion(ApiHelper.HAS_GLES20_REQUIRED ? 2 : 1);
         if (ApiHelper.USE_888_PIXEL_FORMAT) {
+        //指定 r g b alpha depth stencil的位数
+        //相当于 bitmapconfig.8888
             setEGLConfigChooser(8, 8, 8, 0, 0, 0);
         } else {
+        //相当于bitmapconfig.565
             setEGLConfigChooser(5, 6, 5, 0, 0, 0);
         }
+        
+        //设置renderer
         setRenderer(this);
         if (ApiHelper.USE_888_PIXEL_FORMAT) {
             getHolder().setFormat(PixelFormat.RGB_888);
@@ -207,6 +245,10 @@ public class GLRootView extends GLSurfaceView
         super.requestRender();
     }
 
+    /* (non-Javadoc)
+     * @see com.android.gallery3d.ui.GLRoot#requestLayoutContentPane()
+     * 当某个glview需要重新计算布局大小时调用，
+     */
     @Override
     public void requestLayoutContentPane() {
         mRenderLock.lock();
@@ -290,12 +332,13 @@ public class GLRootView extends GLSurfaceView
         mRenderLock.lock();
         try {
             mGL = gl;
+            //对render的canvas进行了重新包装
             mCanvas = ApiHelper.HAS_GLES20_REQUIRED ? new GLES20Canvas() : new GLES11Canvas(gl);
             BasicTexture.invalidateAllTextures();
         } finally {
             mRenderLock.unlock();
         }
-
+        //设置是按需要渲染还是连续渲染
         if (DEBUG_FPS || DEBUG_PROFILE) {
             setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
         } else {
@@ -352,6 +395,7 @@ public class GLRootView extends GLSurfaceView
         }
 
         try {
+        	//真正开始绘制当前contentview
             onDrawFrameLocked(gl);
         } finally {
             mRenderLock.unlock();
@@ -408,6 +452,7 @@ public class GLRootView extends GLSurfaceView
         mCanvas.save(GLCanvas.SAVE_FLAG_ALL);
         rotateCanvas(-mCompensation);
         if (mContentView != null) {
+        	//调用根级的contentView,开始一级一级render
            mContentView.render(mCanvas);
         } else {
             // Make sure we always draw something to prevent displaying garbage

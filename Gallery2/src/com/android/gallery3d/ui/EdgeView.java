@@ -22,6 +22,11 @@ import android.opengl.Matrix;
 import com.android.gallery3d.glrenderer.GLCanvas;
 
 // EdgeView draws EdgeEffect (blue glow) at four sides of the view.
+/**
+ * @author pengpan
+ *  绘制边缘发光效果
+ *
+ */
 public class EdgeView extends GLView {
     @SuppressWarnings("unused")
     private static final String TAG = "EdgeView";
@@ -72,7 +77,7 @@ public class EdgeView extends GLView {
         Matrix.setIdentityM(mMatrix, LEFT_M);
         Matrix.setIdentityM(mMatrix, BOTTOM_M);
         Matrix.setIdentityM(mMatrix, RIGHT_M);
-
+        //左 边的edge绕z轴旋转90度
         Matrix.rotateM(mMatrix, LEFT_M, 90, 0, 0, 1);
         Matrix.scaleM(mMatrix, LEFT_M, 1, -1, 1);
 

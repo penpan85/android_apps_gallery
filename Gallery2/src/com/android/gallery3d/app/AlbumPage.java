@@ -63,6 +63,12 @@ import com.android.gallery3d.util.MediaSetUtils;
 
 import java.util.Locale;
 
+/**
+ * @author pengpan
+ * 显示一个相片缩略图页面
+ * 页面基本结构为一个gridview列表页面，每个Item即位相片缩略图
+ *
+ */
 public class AlbumPage extends ActivityState implements GalleryActionBar.ClusterRunner,
         SelectionManager.SelectionListener, MediaSet.SyncListener, GalleryActionBar.OnAlbumModeSelectedListener {
     @SuppressWarnings("unused")
