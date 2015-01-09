@@ -22,6 +22,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 /** Trampoline activity that launches the new Camera activity defined in IntentHelper. */
+/**
+ * @author pengpan
+ * 
+ * 取图像的activity
+ *
+ */
 public class CameraActivity extends Activity {
     @Override
     public void onCreate(Bundle icicle) {
