@@ -18,6 +18,12 @@ package com.android.gallery3d.data;
 
 import android.net.Uri;
 
+/**
+ * @author pengpan 
+ * 
+ * 以媒体文件的路径和版本信息具体封装一个媒体对象
+ *
+ */
 public abstract class MediaObject {
     @SuppressWarnings("unused")
     private static final String TAG = "MediaObject";
@@ -55,7 +61,9 @@ public abstract class MediaObject {
     public static final String MEDIA_TYPE_ALL_STRING = "all";
 
     // These are flags for cache() and return values for getCacheFlag():
+    //不缓存
     public static final int CACHE_FLAG_NO = 0;
+    //缓存缩略图
     public static final int CACHE_FLAG_SCREENNAIL = 1;
     public static final int CACHE_FLAG_FULL = 2;
 

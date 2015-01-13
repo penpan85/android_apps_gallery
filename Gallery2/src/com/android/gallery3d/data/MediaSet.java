@@ -24,13 +24,20 @@ import java.util.WeakHashMap;
 
 // MediaSet is a directory-like data structure.
 // It contains MediaItems and sub-MediaSets.
-//
+// 
 // The primary interface are:
 // getMediaItemCount(), getMediaItem() and
 // getSubMediaSetCount(), getSubMediaSet().
 //
 // getTotalMediaItemCount() returns the number of all MediaItems, including
 // those in sub-MediaSets.
+/**
+ * @author pengpan
+ * 媒体集合类是一个类目录的数据结构，以文件系统的结构形式描述某个目录对应的媒体集合，其包含多个媒体条目和子媒体集合
+ * 最重要的接口如 getMediaItemCount(),getMediaItem(),getSubMediaSetCount(),getSubMediaSet()
+ * 
+ * 需要注意的是getMediaItemCount(),它返回的是某个路径对应的所有媒体条目数量
+ */
 public abstract class MediaSet extends MediaObject {
     @SuppressWarnings("unused")
     private static final String TAG = "MediaSet";
@@ -69,10 +76,17 @@ public abstract class MediaSet extends MediaObject {
     // media items available may not be consistent with the return value of
     // getMediaItemCount() because the contents of database may have already
     // changed.
+    // 返回指定范围内的mediaItems,
+    // 如果没有足够的媒体对象,返回的mediaItems可能比指定的数量要少，可用的媒体对象数量并不会总是与getMediaItemCount()返回的
+    // 数量相一致，因为数据库的内容可能已经发生了变化
     public ArrayList<MediaItem> getMediaItem(int start, int count) {
         return new ArrayList<MediaItem>();
     }
 
+    /**
+     * @return
+     * 返回一个封面类型的mediaItem,先从当前根目录里取缔一个文件作为封面，没有的话，遍历从子目录获取第一个文件，一直到找到目标文件为止
+     */
     public MediaItem getCoverMediaItem() {
         ArrayList<MediaItem> items = getMediaItem(0, 1);
         if (items.size() > 0) return items.get(0);
@@ -107,6 +121,7 @@ public abstract class MediaSet extends MediaObject {
     /**
      * Method {@link #reload()} may process the loading task in background, this method tells
      * its client whether the loading is still in process or not.
+     * 本媒体对象集对应当的加载任务可能正在进行中，此方法用来返回加载状态
      */
     public boolean isLoading() {
         return false;
@@ -121,6 +136,7 @@ public abstract class MediaSet extends MediaObject {
     }
 
     // TODO: we should have better implementation of sub classes
+    // 得到指定路径的索引值
     public int getIndexOfItem(Path path, int hint) {
         // hint < 0 is handled below
         // first, try to find it around the hint
@@ -189,6 +205,7 @@ public abstract class MediaSet extends MediaObject {
     // Enumerate all media items in this media set (including the ones in sub
     // media sets), in an efficient order. ItemConsumer.consumer() will be
     // called for each media item with its index.
+    // 枚举出此mediaSet中所有的mediaItem
     public void enumerateMediaItems(ItemConsumer consumer) {
         enumerateMediaItems(consumer, 0);
     }
@@ -271,6 +288,12 @@ public abstract class MediaSet extends MediaObject {
         public void waitDone() {}
     };
 
+    /**
+     * @param sets
+     * @param listener
+     * @return
+     * 执行同步指定的mediaSet对象
+     */
     protected Future<Integer> requestSyncOnMultipleSets(MediaSet[] sets, SyncListener listener) {
         return new MultiSetSyncFuture(sets, listener);
     }

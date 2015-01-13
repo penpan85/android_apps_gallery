@@ -129,6 +129,7 @@ public abstract class MultiSelectGridFragment extends Fragment
         mAdapter = adapter;
         if (mGrid != null) {
             mGrid.setAdapter(adapter);
+            //如果gridview在setAdapter之前是不可见的，并且没有被设置过adapter,那么调用setGridShown显示出gridview
             if (!mGridShown && !hadAdapter) {
                 // The grid was hidden, and previously didn't have an
                 // adapter. It is now time to show it.
@@ -270,6 +271,7 @@ public abstract class MultiSelectGridFragment extends Fragment
     }
 
     private void ensureGrid() {
+    	//先判断下控件是否为null，如果不为null说明已经创建国，ondestroyview还没有销毁gridview,继续复用
         if (mGrid != null) {
             return;
         }
@@ -312,6 +314,7 @@ public abstract class MultiSelectGridFragment extends Fragment
         } else {
             // We are starting without an adapter, so assume we won't
             // have our data right away and start with the progress indicator.
+        	//adapter还不存在，说明数据还没有准备好，显示一个Progress
             if (mProgressContainer != null) {
                 setGridShown(false, false);
             }

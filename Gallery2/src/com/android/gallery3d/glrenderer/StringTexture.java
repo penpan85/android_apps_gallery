@@ -42,6 +42,12 @@ public class StringTexture extends CanvasTexture {
         mMetrics = metrics;
     }
 
+    /**
+     * @param textSize
+     * @param color
+     * @return
+     * 得到默认的paint
+     */
     public static TextPaint getDefaultPaint(float textSize, int color) {
         TextPaint paint = new TextPaint();
         paint.setTextSize(textSize);
@@ -64,6 +70,7 @@ public class StringTexture extends CanvasTexture {
             paint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         }
         if (lengthLimit > 0) {
+        	//得到一个处理过的字符串，如果宽度超过了上限，以TruncateAt的枚举类型对应的补充方式对字符串进行补充
             text = TextUtils.ellipsize(
                     text, paint, lengthLimit, TextUtils.TruncateAt.END).toString();
         }

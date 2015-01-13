@@ -53,19 +53,24 @@ import java.io.FileNotFoundException;
 
 public class AbstractGalleryActivity extends Activity implements GalleryContext {
     private static final String TAG = "AbstractGalleryActivity";
+    //activity中最根级的view，所有的视图都被添加到mGLRootView中
     private GLRootView mGLRootView;
     private StateManager mStateManager;
+    //右上角点击后下拉的菜单
     private GalleryActionBar mActionBar;
+    //屏幕方向的管理
     private OrientationManager mOrientationManager;
     private TransitionStore mTransitionStore = new TransitionStore();
     private boolean mDisableToggleStatusBar;
+    //全景图片助手类
     private PanoramaViewHelper mPanoramaViewHelper;
 
     private AlertDialog mAlertDialog = null;
     private BroadcastReceiver mMountReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (getExternalCacheDir() != null) onStorageReady();
+            if (getExternalCacheDir() != null) 
+            	onStorageReady();
         }
     };
     private IntentFilter mMountFilter = new IntentFilter(Intent.ACTION_MEDIA_MOUNTED);
@@ -74,6 +79,7 @@ public class AbstractGalleryActivity extends Activity implements GalleryContext 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mOrientationManager = new OrientationManager(this);
+        //调整statusBar的orientation
         toggleStatusBarByOrientation();
         getWindow().setBackgroundDrawable(null);
         mPanoramaViewHelper = new PanoramaViewHelper(this);

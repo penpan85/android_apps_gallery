@@ -48,6 +48,11 @@ public class StateManager {
         mActivity = activity;
     }
 
+    /**
+     * @param klass
+     * @param data
+     * 启动某个指定的页面，相当于startActivity
+     */
     public void startState(Class<? extends ActivityState> klass,
             Bundle data) {
         Log.v(TAG, "startState " + klass);
@@ -57,6 +62,7 @@ public class StateManager {
         } catch (Exception e) {
             throw new AssertionError(e);
         }
+        //先控制暂停stack最顶部的page
         if (!mStack.isEmpty()) {
             ActivityState top = getTopState();
             top.transitionOnNextPause(top.getClass(), klass,
@@ -67,11 +73,14 @@ public class StateManager {
         UsageStatistics.onContentViewChanged(
                 UsageStatistics.COMPONENT_GALLERY,
                 klass.getSimpleName());
+        //传入 activity,data的引用
         state.initialize(mActivity, data);
-
+        //利用栈记录当前Page对应的stateEntry
         mStack.push(new StateEntry(data, state));
+        //创建指定的page
         state.onCreate(data, null);
-        if (mIsResumed) state.resume();
+        if (mIsResumed) 
+        	state.resume();
     }
 
     public void startStateForResult(Class<? extends ActivityState> klass,

@@ -38,6 +38,11 @@ import com.android.photos.shims.MediaSetLoader;
 import java.util.ArrayList;
 
 
+/**
+ * @author pengpan
+ * 非gallery3d方式渲染的相册缩略图页面
+ *
+ */
 public class AlbumSetFragment extends MultiSelectGridFragment implements LoaderCallbacks<Cursor> {
 
     private AlbumSetCursorAdapter mAdapter;
@@ -67,6 +72,7 @@ public class AlbumSetFragment extends MultiSelectGridFragment implements LoaderC
                 .getDimensionPixelSize(R.dimen.album_set_item_width));
     }
 
+    //创建Loader的回调
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         // TODO: Switch to AlbumSetLoader
@@ -76,6 +82,7 @@ public class AlbumSetFragment extends MultiSelectGridFragment implements LoaderC
         return loader;
     }
 
+    //加载结束后的回调
     @Override
     public void onLoadFinished(Loader<Cursor> loader,
             Cursor data) {

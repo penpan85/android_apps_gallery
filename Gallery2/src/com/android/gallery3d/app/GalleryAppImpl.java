@@ -58,6 +58,7 @@ public class GalleryAppImpl extends Application implements GalleryApp {
         return this;
     }
 
+    //构造并初始化DataManager
     @Override
     public synchronized DataManager getDataManager() {
         if (mDataManager == null) {

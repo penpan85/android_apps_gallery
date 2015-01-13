@@ -43,20 +43,28 @@ import com.android.gallery3d.util.GalleryUtils;
  * @author pengpan
  * 相册缩略图页面，相片缩略图页，单张图片页面，全屏相片页的父类
  * 各种不同的activityState由stateManager管理
+ * 主要由stateManager调用此类的 onCreate --> onResume --> onPause --> onDestroy()实现对子页面生命周期的控制
  * 
  */
 abstract public class ActivityState {
+	//隐藏actionbar
     protected static final int FLAG_HIDE_ACTION_BAR = 1;
+    //隐藏状态栏
     protected static final int FLAG_HIDE_STATUS_BAR = 2;
+    
     protected static final int FLAG_SCREEN_ON_WHEN_PLUGGED = 4;
+    //保持屏幕常亮
     protected static final int FLAG_SCREEN_ON_ALWAYS = 8;
+    //屏幕常亮时允许锁屏
     protected static final int FLAG_ALLOW_LOCK_WHILE_SCREEN_ON = 16;
+    
     protected static final int FLAG_SHOW_WHEN_LOCKED = 32;
 
     protected AbstractGalleryActivity mActivity;
+    //子页面需要的参数数据
     protected Bundle mData;
     protected int mFlags;
-
+    //子页面接收到的结果
     protected ResultEntry mReceivedResults;
     protected ResultEntry mResult;
 
@@ -80,6 +88,10 @@ abstract public class ActivityState {
     protected ActivityState() {
     }
 
+    /**
+     * @param content
+     * 设置子页面的内容view
+     */
     protected void setContentPane(GLView content) {
         mContentPane = content;
         if (mIntroAnimation != null) {
@@ -141,8 +153,9 @@ abstract public class ActivityState {
         public void onReceive(Context context, Intent intent) {
             final String action = intent.getAction();
             if (Intent.ACTION_BATTERY_CHANGED.equals(action)) {
+            	//是否成功的获取了充电方式，有交流电充电，usb充电
                 boolean plugged = (0 != intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0));
-
+               
                 if (plugged != mPlugged) {
                     mPlugged = plugged;
                     setScreenFlags();

@@ -37,23 +37,36 @@ import java.util.Map.Entry;
 import java.util.WeakHashMap;
 
 // DataManager manages all media sets and media items in the system.
-//
+// 数据管理器管理所有的媒体集合以及所有的媒体条目
 // Each MediaSet and MediaItem has a unique 64 bits id. The most significant
 // 32 bits represents its parent, and the least significant 32 bits represents
 // the self id. For MediaSet the self id is is globally unique, but for
 // MediaItem it's unique only relative to its parent.
-//
+// 每个媒体集合和媒体条目有一个唯一的64位的id，头32位表示某个mediaset的父set,后面32位表示它自身的id，
+// 每个mediaSet的id都是全局唯一的，但对于mediaItem来讲，只是相对于其父级mediaSet,id是唯一的
 // To make sure the id is the same when the MediaSet is re-created, a child key
 // is provided to obtainSetId() to make sure the same self id will be used as
 // when the parent and key are the same. A sequence of child keys is called a
 // path. And it's used to identify a specific media set even if the process is
 // killed and re-created, so child keys should be stable identifiers.
+// 为了确保当mediaSet被重新创建时其id是相同的，一个子对象提供了obtainSetId来提供子对象的Id来确保当父对象id未发生
+// 变化时，子对象的id也不发生变化，子对象的key的序列其实是一个路径，不管进程是否被重新创建都用来标示特定mediaSet，
+// 所以子对象的key具有稳定的唯一性
 
+/**
+ * @author pengpan
+ * 数据源管理类
+ */
 public class DataManager implements StitchingChangeListener {
+	//包含图片
     public static final int INCLUDE_IMAGE = 1;
+    //包含视频
     public static final int INCLUDE_VIDEO = 2;
+    //包含图片和视频
     public static final int INCLUDE_ALL = INCLUDE_IMAGE | INCLUDE_VIDEO;
+    //只包含本地所有媒体类型
     public static final int INCLUDE_LOCAL_ONLY = 4;
+    
     public static final int INCLUDE_LOCAL_IMAGE_ONLY =
             INCLUDE_LOCAL_ONLY | INCLUDE_IMAGE;
     public static final int INCLUDE_LOCAL_VIDEO_ONLY =
@@ -65,6 +78,7 @@ public class DataManager implements StitchingChangeListener {
     // to prevent concurrency issue.
     public static final Object LOCK = new Object();
 
+    // 构造出自身的对象
     public static DataManager from(Context context) {
         GalleryApp app = (GalleryApp) context.getApplicationContext();
         return app.getDataManager();
@@ -113,6 +127,7 @@ public class DataManager implements StitchingChangeListener {
         mDefaultMainHandler = new Handler(application.getMainLooper());
     }
 
+    //初始化各种数据源
     public synchronized void initializeSourceMap() {
         if (!mSourceMap.isEmpty()) return;
 

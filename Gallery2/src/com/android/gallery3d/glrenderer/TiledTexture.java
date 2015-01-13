@@ -36,6 +36,10 @@ import java.util.ArrayList;
 // split into tiles. By doing so, we may increase the time required to
 // upload the whole bitmap but we reduce the time of uploading each tile
 // so it make the animation more smooth and prevents jank.
+/**
+ * @author pengpan
+ * 与bitmapTexture类似
+ */
 public class TiledTexture implements Texture {
     private static final int CONTENT_SIZE = 254;
     private static final int BORDER_SIZE = 1;

@@ -35,11 +35,16 @@ import java.util.Comparator;
 
 // LocalAlbumSet lists all image or video albums in the local storage.
 // The path should be "/local/image", "local/video" or "/local/all"
+/**
+ * @author pengpan
+ * 本地相册集
+ */
 public class LocalAlbumSet extends MediaSet
         implements FutureListener<ArrayList<MediaSet>> {
     @SuppressWarnings("unused")
     private static final String TAG = "LocalAlbumSet";
 
+    
     public static final Path PATH_ALL = Path.fromString("/local/all");
     public static final Path PATH_IMAGE = Path.fromString("/local/image");
     public static final Path PATH_VIDEO = Path.fromString("/local/video");

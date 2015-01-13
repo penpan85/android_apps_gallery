@@ -66,14 +66,14 @@ public final class GalleryActivity extends AbstractGalleryActivity implements On
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
-
+        //控制屏幕不锁屏
         if (getIntent().getBooleanExtra(KEY_DISMISS_KEYGUARD, false)) {
             getWindow().addFlags(
                     WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         }
 
         setContentView(R.layout.main);
-
+        //这个stateManager相当于activityManager
         if (savedInstanceState != null) {
             getStateManager().restoreFromState(savedInstanceState);
         } else {
@@ -102,6 +102,7 @@ public final class GalleryActivity extends AbstractGalleryActivity implements On
                 || ACTION_REVIEW.equalsIgnoreCase(action)){
             startViewAction(intent);
         } else {
+        	//启动默认的页面
             startDefaultPage();
         }
     }
@@ -109,8 +110,10 @@ public final class GalleryActivity extends AbstractGalleryActivity implements On
     public void startDefaultPage() {
         PicasaSource.showSignInReminder(this);
         Bundle data = new Bundle();
+        //默认显示相册缩略图页面
         data.putString(AlbumSetPage.KEY_MEDIA_PATH,
                 getDataManager().getTopSetPath(DataManager.INCLUDE_ALL));
+        //相当于 startActivity
         getStateManager().startState(AlbumSetPage.class, data);
         mVersionCheckDialog = PicasaSource.getVersionCheckDialog(this);
         if (mVersionCheckDialog != null) {

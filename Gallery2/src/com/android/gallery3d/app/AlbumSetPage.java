@@ -94,7 +94,7 @@ public class AlbumSetPage extends ActivityState implements
     private SlotView mSlotView;
     private AlbumSetSlotRenderer mAlbumSetView;
     private Config.AlbumSetPage mConfig;
-
+    //与某个目录相映射
     private MediaSet mMediaSet;
     private String mTitle;
     private String mSubtitle;
@@ -329,6 +329,7 @@ public class AlbumSetPage extends ActivityState implements
     public void onCreate(Bundle data, Bundle restoreState) {
         super.onCreate(data, restoreState);
         initializeViews();
+        //创建数据源，数据适配器
         initializeData(data);
         Context context = mActivity.getAndroidContext();
         mGetContent = data.getBoolean(GalleryActivity.KEY_GET_CONTENT, false);
@@ -464,6 +465,7 @@ public class AlbumSetPage extends ActivityState implements
     public void onResume() {
         super.onResume();
         mIsActive = true;
+        //这一句会把本Page里面的根glView添加到activity的glsurfaceview中，所以很关键
         setContentPane(mRootPane);
 
         // Set the reload bit here to prevent it exit this page in clearLoadingBit().
@@ -483,21 +485,29 @@ public class AlbumSetPage extends ActivityState implements
     }
 
     private void initializeData(Bundle data) {
+    	//得到媒体文件路径
         String mediaPath = data.getString(AlbumSetPage.KEY_MEDIA_PATH);
+        //得到路径中所有媒体的集合
         mMediaSet = mActivity.getDataManager().getMediaSet(mediaPath);
         mSelectionManager.setSourceMediaSet(mMediaSet);
+        //缩略图集合数据适配器，数据源与page之间的桥梁
         mAlbumSetDataAdapter = new AlbumSetDataLoader(
                 mActivity, mMediaSet, DATA_CACHE_SIZE);
         mAlbumSetDataAdapter.setLoadingListener(new MyLoadingListener());
         mAlbumSetView.setModel(mAlbumSetDataAdapter);
     }
 
+    /**
+     * 初始化所有的view
+     */
     private void initializeViews() {
         mSelectionManager = new SelectionManager(mActivity, true);
         mSelectionManager.setSelectionListener(this);
 
         mConfig = Config.AlbumSetPage.get(mActivity);
+        //2*2组合式的子view
         mSlotView = new SlotView(mActivity, mConfig.slotViewSpec);
+        //相册缩略图条目渲染器
         mAlbumSetView = new AlbumSetSlotRenderer(
                 mActivity, mSelectionManager, mSlotView, mConfig.labelSpec,
                 mConfig.placeholderColor);
@@ -743,11 +753,13 @@ public class AlbumSetPage extends ActivityState implements
     }
 
     private class MyLoadingListener implements LoadingListener {
+    	//数据适配器加载数据开始的回调 
         @Override
         public void onLoadingStarted() {
             setLoadingBit(BIT_LOADING_RELOAD);
         }
-
+        
+        //数据适配器加载数据结束的回调
         @Override
         public void onLoadingFinished(boolean loadingFailed) {
             clearLoadingBit(BIT_LOADING_RELOAD);

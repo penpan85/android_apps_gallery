@@ -33,6 +33,13 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+/**
+ * @author pengpan
+ *
+ * 相册缩略图适配器
+ * 对指定目录下的数据集进行更新
+ * 主要起管理加载线程的作用
+ */
 public class AlbumSetDataLoader {
     @SuppressWarnings("unused")
     private static final String TAG = "AlbumSetDataAdapter";
@@ -108,6 +115,9 @@ public class AlbumSetDataLoader {
         mSource.removeContentListener(mSourceListener);
     }
 
+    /**
+     * 界面恢复时开始加载
+     */
     public void resume() {
         mSource.addContentListener(mSourceListener);
         mReloadTask = new ReloadTask();
@@ -241,6 +251,10 @@ public class AlbumSetDataLoader {
         public int totalCount;
     }
 
+    /**
+     * @author pengpan
+     * 
+     */
     private class GetUpdateInfo implements Callable<UpdateInfo> {
 
         private final long mVersion;
@@ -254,7 +268,8 @@ public class AlbumSetDataLoader {
             int length = setVersion.length;
             for (int i = mContentStart, n = mContentEnd; i < n; ++i) {
                 int index = i % length;
-                if (setVersion[i % length] != version) return i;
+                if (setVersion[i % length] != version) 
+                	return i;
             }
             return INDEX_NONE;
         }
@@ -282,6 +297,7 @@ public class AlbumSetDataLoader {
         public Void call() {
             // Avoid notifying listeners of status change after pause
             // Otherwise gallery will be in inconsistent state after resume.
+        	// 避免在暂停后还通知状态变化，不然gallery在resume后状态会不一致
             if (mReloadTask == null) return null;
             UpdateInfo info = mUpdateInfo;
             mSourceVersion = info.version;
@@ -324,7 +340,10 @@ public class AlbumSetDataLoader {
     }
 
     // TODO: load active range first
+    
+    // reloadtask contains two callable object 
     private class ReloadTask extends Thread {
+    	//用了volatile,内存不会因为线程而保留一份拷贝
         private volatile boolean mActive = true;
         private volatile boolean mDirty = true;
         private volatile boolean mIsLoading = false;
@@ -338,7 +357,6 @@ public class AlbumSetDataLoader {
         @Override
         public void run() {
             Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
-
             boolean updateComplete = false;
             while (mActive) {
                 synchronized (this) {
@@ -349,9 +367,12 @@ public class AlbumSetDataLoader {
                     }
                 }
                 mDirty = false;
+                //置标志位mIsLoading为true，通知ui，绘制loading开始的状态
                 updateLoading(true);
-
+                
                 long version = mSource.reload();
+                //得到最新的数据，并包装到updateInfo中
+                
                 UpdateInfo info = executeAndWait(new GetUpdateInfo(version));
                 updateComplete = info == null;
                 if (updateComplete) continue;
@@ -363,16 +384,20 @@ public class AlbumSetDataLoader {
                     // receive from GetUpdateInfo an index which is too
                     // big. Because the main thread is not aware of the size
                     // change until we call UpdateContent.
+                    // 如果reload()后，size变得更小了，我们可能接收到一个太大的索引，因为如果没有调用updateContent,
+                    // 主线程并不会响应到大小的变化
                     if (info.index >= info.size) {
                         info.index = INDEX_NONE;
                     }
                 }
                 if (info.index != INDEX_NONE) {
+                	//得到根媒体对象集的指定索引的子集
                     info.item = mSource.getSubMediaSet(info.index);
                     if (info.item == null) continue;
                     info.cover = info.item.getCoverMediaItem();
                     info.totalCount = info.item.getTotalMediaItemCount();
                 }
+                
                 executeAndWait(new UpdateContent(info));
             }
             updateLoading(false);

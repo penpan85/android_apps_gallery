@@ -30,6 +30,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * @author pengpan
+ * 本地数据源对象
+ */ 
 class LocalSource extends MediaSource {
 
     public static final String KEY_BUCKET_ID = "bucketId";
