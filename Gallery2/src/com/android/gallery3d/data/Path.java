@@ -97,6 +97,12 @@ public class Path {
         return path.equalsIgnoreCase(p);
     }
 
+    /**
+     * @param s 
+     * @return
+     * 比如 /combo/{/local/all,/picasa/all}
+     * 
+     */
     public static Path fromString(String s) {
         synchronized (Path.class) {
             String[] segments = split(s);
@@ -122,7 +128,9 @@ public class Path {
             return segments;
         }
     }
-
+    // 例如/combo/{/local/all,/picasa/all}经过处理后
+    // while内第一次循环得到 "combo",
+    // 第二次循环得到了"{/local/all,/picasa/all}"
     public static String[] split(String s) {
         int n = s.length();
         if (n == 0) return new String[0];
@@ -143,7 +151,9 @@ public class Path {
             if (brace != 0) {
                 throw new RuntimeException("unbalanced brace in path:" + s);
             }
+            // 第一次循环后，i=1,j=6
             segments.add(s.substring(i, j));
+            // 第一次循环后，i=7
             i = j + 1;
         }
         String[] result = new String[segments.size()];

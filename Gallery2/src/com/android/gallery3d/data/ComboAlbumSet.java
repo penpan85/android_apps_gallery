@@ -29,6 +29,12 @@ public class ComboAlbumSet extends MediaSet implements ContentListener {
     private final MediaSet[] mSets;
     private final String mName;
 
+    
+    /**
+     * @param path 默认传入 "/combo/{/local/all,/picasa/all}"
+     * @param application
+     * @param mediaSets "/local/all","/picasa/all"分别对应的mediaSet
+     */
     public ComboAlbumSet(Path path, GalleryApp application, MediaSet[] mediaSets) {
         super(path, nextVersionNumber());
         mSets = mediaSets;
@@ -73,6 +79,8 @@ public class ComboAlbumSet extends MediaSet implements ContentListener {
         return false;
     }
 
+    // 页面默认执行remume，mSets会有"/local/all","/picasa/all"两个mediaSet
+    // 所以会调用两者的reload()方法
     @Override
     public long reload() {
         boolean changed = false;

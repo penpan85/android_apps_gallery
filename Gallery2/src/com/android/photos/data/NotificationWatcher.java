@@ -25,8 +25,11 @@ import java.util.ArrayList;
  * Used for capturing notifications from PhotoProvider without relying on
  * ContentResolver. MockContentResolver does not allow sending notification to
  * ContentObservers, so PhotoProvider allows this alternative for testing.
+ * 用来拦截从photoProvider发出去的notifications,而不必依赖contentResolver,mockContentResolver
+ * 不允许发送通知到内容观察者,所以photoProvider允许可变以便于测试
  */
 public class NotificationWatcher implements ChangeNotification {
+	
     private ArrayList<Uri> mUris = new ArrayList<Uri>();
     private boolean mSyncToNetwork = false;
 

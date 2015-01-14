@@ -37,7 +37,7 @@ import java.util.Comparator;
 // The path should be "/local/image", "local/video" or "/local/all"
 /**
  * @author pengpan
- * 本地相册集
+ * 本地相册集,包含许多个LocalAlbum或者LocalMergeAlbum
  */
 public class LocalAlbumSet extends MediaSet
         implements FutureListener<ArrayList<MediaSet>> {
@@ -53,6 +53,7 @@ public class LocalAlbumSet extends MediaSet
         {Images.Media.EXTERNAL_CONTENT_URI, Video.Media.EXTERNAL_CONTENT_URI};
 
     private final GalleryApp mApplication;
+    // 是image类型还是 video类型
     private final int mType;
     private ArrayList<MediaSet> mAlbums = new ArrayList<MediaSet>();
     private final ChangeNotifier mNotifier;
@@ -67,6 +68,7 @@ public class LocalAlbumSet extends MediaSet
         super(path, nextVersionNumber());
         mApplication = application;
         mHandler = new Handler(application.getMainLooper());
+        //默认path "/local/all",所以mType默认情况下会是"MEDIA_TYPE_ALL"
         mType = getTypeFromPath(path);
         mNotifier = new ChangeNotifier(this, mWatchUris, application);
         mName = application.getResources().getString(
@@ -103,6 +105,10 @@ public class LocalAlbumSet extends MediaSet
         return -1;
     }
 
+    /**
+     * @author pengpan
+     * 相册数据加载器，获取此相册集下所有相册对应的MediaSet对象集合 
+     */
     private class AlbumsLoader implements ThreadPool.Job<ArrayList<MediaSet>> {
 
         @Override
@@ -110,6 +116,7 @@ public class LocalAlbumSet extends MediaSet
         public ArrayList<MediaSet> run(JobContext jc) {
             // Note: it will be faster if we only select media_type and bucket_id.
             //       need to test the performance if that is worth
+        	// 得到所有媒体文件的entry
             BucketEntry[] entries = BucketHelper.loadBucketEntries(
                     jc, mApplication.getContentResolver(), mType);
 
@@ -118,6 +125,7 @@ public class LocalAlbumSet extends MediaSet
             int offset = 0;
             // Move camera and download bucket to the front, while keeping the
             // order of others.
+            // 让camera和download类型的媒体文件entry排到最前面，保持其他的顺序
             int index = findBucket(entries, MediaSetUtils.CAMERA_BUCKET_ID);
             if (index != -1) {
                 circularShiftRight(entries, offset++, index);
@@ -130,6 +138,11 @@ public class LocalAlbumSet extends MediaSet
             ArrayList<MediaSet> albums = new ArrayList<MediaSet>();
             DataManager dataManager = mApplication.getDataManager();
             for (BucketEntry entry : entries) {
+            	// entry.bucketId:相当于相册的父路径
+            	// entry.bucketName:相当于相册对应的文件夹名称
+            	// 比方当前相册album完整路径 /sdcard/download/album
+            	// 那么bucketId即为"/sdcard/download"的hashCode,bucketName为album
+            	// mPath默认下会传入 "/local/all"
                 MediaSet album = getLocalAlbum(dataManager,
                         mType, mPath, entry.bucketId, entry.bucketName);
                 albums.add(album);
@@ -138,10 +151,20 @@ public class LocalAlbumSet extends MediaSet
         }
     }
 
+    /**
+     * @param manager
+     * @param type MEDIA_TYPE_IMAGE,MEDIA_TYPE_VIDEO,MEDIA_TYPE_ALL
+     * @param parent 相册的path,如"/local/all"
+     * @param id 相册的实际父路径的hashCode,例如 /sdcard/download
+     * @param name 相册实际文件夹名称
+     * @return
+     */
     private MediaSet getLocalAlbum(
             DataManager manager, int type, Path parent, int id, String name) {
         synchronized (DataManager.LOCK) {
+        	// 生成 相册目录对应的path,/local/all/jdfdjjf
             Path path = parent.getChild(id);
+            // 得到path可能已经关联的MediaObject
             MediaObject object = manager.peekMediaObject(path);
             if (object != null) return (MediaSet) object;
             switch (type) {
@@ -168,10 +191,13 @@ public class LocalAlbumSet extends MediaSet
     // synchronized on this function for
     //   1. Prevent calling reload() concurrently.
     //   2. Prevent calling onFutureDone() and reload() concurrently
+    // 页面进入resume后就会调用此reload()方法
     public synchronized long reload() {
+    	//首次进入，isDirty()返回true
         if (mNotifier.isDirty()) {
             if (mLoadTask != null) mLoadTask.cancel();
             mIsLoading = true;
+            // 执行完这一步，该相册集所有的LocalAlbum都被加载进了mAlbums
             mLoadTask = mApplication.getThreadPool().submit(new AlbumsLoader(), this);
         }
         if (mLoadBuffer != null) {
@@ -185,6 +211,10 @@ public class LocalAlbumSet extends MediaSet
         return mDataVersion;
     }
 
+    /* (non-Javadoc)
+     * @see com.android.gallery3d.util.FutureListener#onFutureDone(com.android.gallery3d.util.Future)
+     * AlbumsLoader被执行完毕后，会回调此方法最终得到所有的localAlbum
+     */
     @Override
     public synchronized void onFutureDone(Future<ArrayList<MediaSet>> future) {
         if (mLoadTask != future) return; // ignore, wait for the latest task
@@ -194,6 +224,7 @@ public class LocalAlbumSet extends MediaSet
         mHandler.post(new Runnable() {
             @Override
             public void run() {
+            	//通知albumSetDataLoader数据发生了变化
                 notifyContentChanged();
             }
         });

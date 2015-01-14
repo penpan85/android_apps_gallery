@@ -1,0 +1,2391 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0045)http://www.cnblogs.com/linlf03/p/3477077.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/analytics.js"></script>
+
+<title>Android MediaProvider数据库模式 - work hard work smart - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/bundle-KJC.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/linlf03/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/linlf03/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/linlf03/wlwmanifest.xml">
+<script async="" type="text/javascript" src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/gpt.js"></script><script src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'linlf03', cb_enable_mathjax=false;</script>
+<script src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/blog-common.js" type="text/javascript"></script>
+<script async="" type="text/javascript" src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/pubads_impl_55.js"></script><script type="text/javascript" src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/osd.js"></script></head>
+<body>
+<a name="top"></a>
+
+<table class="Framework" cellspacing="0" cellpadding="0" width="100%">
+	<tbody><tr>
+		<td colspan="3">
+			
+<div id="top">
+<table cellpadding="10" cellspacing="0">
+	<tbody><tr>
+		<td nowrap="">
+			<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/linlf03/">work hard work smart</a></h1>
+			专注于Metro style app(C#)，WPF,Asp.net。 不断总结，举一反三。
+		</td>
+	</tr>
+</tbody></table>
+</div>
+<div id="sub">
+	<div id="sub-right">
+<div class="BlogStats">posts - 343, comments - 84, trackbacks - 0, articles - 0</div></div>
+	
+&nbsp;
+<a id="Header1_MyLinks1_HomeLink" href="http://www.cnblogs.com/">博客园</a>&nbsp;::
+<a id="Header1_MyLinks1_MyHomeLink" href="http://www.cnblogs.com/linlf03/">首页</a>&nbsp;::
+<a id="Header1_MyLinks1_NewPostLink" rel="nofollow" href="http://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a>&nbsp;::
+<a id="Header1_MyLinks1_ContactLink" accesskey="9" rel="nofollow" href="http://space.cnblogs.com/msg/send/work+hard+work+smart">联系</a>&nbsp;::
+<a id="Header1_MyLinks1_Syndication" href="http://www.cnblogs.com/linlf03/rss">订阅</a>
+<a id="Header1_MyLinks1_XMLLink" class="XMLLink" href="http://www.cnblogs.com/linlf03/rss"><img src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/xml.gif" alt="订阅"></a>&nbsp;::
+<a id="Header1_MyLinks1_Admin" rel="nofollow" href="http://i.cnblogs.com/">管理</a>
+
+</div>
+		</td>
+	</tr>
+	<tr>
+		<td class="LeftCell">
+			<div id="leftmenu">
+            	
+		            <div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="日历">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2014/12/01&#39;);return false;">&lt;</a></td><td align="center">2015年1月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2015/02/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">28</td><td class="CalOtherMonthDay" align="center">29</td><td class="CalOtherMonthDay" align="center">30</td><td class="CalOtherMonthDay" align="center">31</td><td align="center">1</td><td align="center">2</td><td class="CalWeekendDay" align="center">3</td></tr><tr><td class="CalWeekendDay" align="center">4</td><td align="center">5</td><td align="center">6</td><td align="center">7</td><td align="center">8</td><td align="center">9</td><td class="CalWeekendDay" align="center">10</td></tr><tr><td class="CalWeekendDay" align="center">11</td><td align="center">12</td><td align="center">13</td><td class="CalTodayDay" align="center">14</td><td align="center">15</td><td align="center">16</td><td class="CalWeekendDay" align="center">17</td></tr><tr><td class="CalWeekendDay" align="center">18</td><td align="center">19</td><td align="center">20</td><td align="center">21</td><td align="center">22</td><td align="center">23</td><td class="CalWeekendDay" align="center">24</td></tr><tr><td class="CalWeekendDay" align="center">25</td><td align="center">26</td><td align="center">27</td><td align="center">28</td><td align="center">29</td><td align="center">30</td><td class="CalWeekendDay" align="center">31</td></tr><tr><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td><td class="CalOtherMonthDay" align="center">7</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+		            
+<div id="cell">
+<img src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/icon-group.jpg" hspace="5" align="left" vspace="2"><h3>公告</h3>
+<div id="news">
+	<div id="blog-news"><!-- 博客园新闻频道引用代码 num-显示条数 -->
+<a href="http://www.cnblogs.com/linlf03/">Work Hard, Work Smart, Work Happy!</a>
+<br>
+<p>
+熟悉Metro Style App(C#)、ASP.NET、WPF
+<br>
+染指Java，Jsp，Android，SQL Server、Oracle、JavaScript、HTML5、CSS3、WCF等技术
+</p><div id="profile_block">昵称：<a href="http://home.cnblogs.com/u/linlf03/">work hard work smart</a><br>园龄：<a href="http://home.cnblogs.com/u/linlf03/" title="入园时间：2010-09-14">4年4个月</a><br>粉丝：<a href="http://home.cnblogs.com/u/linlf03/followers/">78</a><br>关注：<a href="http://home.cnblogs.com/u/linlf03/followees/">21</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="cnblogs.UserManager.FollowBlogger(&#39;2a24311a-9ebf-df11-ac81-842b2b196315&#39;)">+加关注</a></div></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+</div>
+
+	            
+	            <div id="blog-sidecolumn">
+<div id="cell">
+<img src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/icon-group.jpg" hspace="5" align="left" vspace="2">
+<h3 class="catListTitle">搜索</h3>
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+<div id="cell">
+<img src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/icon-group.jpg" hspace="5" align="left" vspace="2">
+<h3>常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/linlf03/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/linlf03/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/linlf03/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/linlf03/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/linlf03/tag/" title="我的博客的标签列表">我的标签</a></li>
+<li><a id="itemListLink" onclick="this.blur();WarpClass(&#39;itemListLink&#39;, &#39;itemListLin_con&#39;);return false;" href="http://www.cnblogs.com/linlf03/p/3477077.html#">更多链接</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+
+</div>
+</div>
+<div id="cell">
+<img src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/icon-group.jpg" hspace="5" align="left" vspace="2">
+<h3>我的标签</h3>
+<div id="MyTag">
+<ul>
+<li><a href="http://www.cnblogs.com/linlf03/tag/Android/">Android</a>(2)</li><li><a href="http://www.cnblogs.com/linlf03/tag/Android%20%E5%9F%BA%E7%A1%80/">Android 基础</a>(2)</li><li><a href="http://www.cnblogs.com/linlf03/tag/c%23%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86----%E5%A7%94%E6%89%98%E5%92%8C%E4%BA%8B%E4%BB%B6/">c#基础知识----委托和事件</a>(2)</li><li><a href="http://www.cnblogs.com/linlf03/tag/Design%20Model/">Design Model</a>(1)</li><li><a href="http://www.cnblogs.com/linlf03/tag/STL/">STL</a>(1)</li><li><a href="http://www.cnblogs.com/linlf03/tag/Word%202007%20%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">Word 2007 基本操作</a>(1)</li><li><a href="http://www.cnblogs.com/linlf03/tag/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/">数据结构和算法</a>(1)</li><li><a href="http://www.cnblogs.com/linlf03/tag/ATL/">ATL</a>(1)</li><li><a href="http://www.cnblogs.com/linlf03/tag/c%23/">c#</a>(1)</li>
+</ul>
+</div>
+</div>
+		<div id="cell">
+		<img src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/icon-group.jpg" hspace="5" align="left" vspace="2"><h3>随笔分类<span style="font-size:11px;font-weight:normal">(362)</span></h3>
+		
+				<ul>
+			
+				<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/linlf03/category/324575.html">.NET互操作性(8)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/linlf03/category/321063.html">A.设计模式(1)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/linlf03/category/307807.html">B.WPF(32)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/linlf03/category/321279.html">B.WPF 控件开发(10)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/linlf03/category/335210.html">B.WPF 类库整理</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/linlf03/category/320270.html">C.Blend(WPF/Silverlight)(1)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/linlf03/category/310922.html">D.C# (34)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/linlf03/category/344111.html">D.Effective C#(1)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/linlf03/category/382202.html">D.More Effective C#</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/linlf03/category/321068.html">E.ASP.NET开发</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/linlf03/category/342284.html">EPub(5)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/linlf03/category/321062.html">F.VS 工具使用技巧(11)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_12" href="http://www.cnblogs.com/linlf03/category/317166.html">G.Experience Sharing(8)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_13" href="http://www.cnblogs.com/linlf03/category/307805.html">H.ATL</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_14" href="http://www.cnblogs.com/linlf03/category/307806.html">I.COM(1)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_15" href="http://www.cnblogs.com/linlf03/category/307804.html">J.CPP(31)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_16" href="http://www.cnblogs.com/linlf03/category/336831.html">J.CPP 高级(3)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_17" href="http://www.cnblogs.com/linlf03/category/321065.html">K.WCF(1)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_18" href="http://www.cnblogs.com/linlf03/category/321066.html">L.WF</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_19" href="http://www.cnblogs.com/linlf03/category/321064.html">M.数据结构(1)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_20" href="http://www.cnblogs.com/linlf03/category/317781.html">N.work hard work smart 随笔目录(1)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_21" href="http://www.cnblogs.com/linlf03/category/345300.html">O. HTML5(6)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_22" href="http://www.cnblogs.com/linlf03/category/348620.html">O.CSS3(2)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_23" href="http://www.cnblogs.com/linlf03/category/346839.html">O.JQuery(7)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_24" href="http://www.cnblogs.com/linlf03/category/353539.html">P. Win 8(34)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_25" href="http://www.cnblogs.com/linlf03/category/356076.html">Q.SQLite(2)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_26" href="http://www.cnblogs.com/linlf03/category/399720.html">R.Linq(1)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_27" href="http://www.cnblogs.com/linlf03/category/436145.html">S.Android(73)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_28" href="http://www.cnblogs.com/linlf03/category/547937.html">S.Android 服务端开发(3)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_29" href="http://www.cnblogs.com/linlf03/category/464635.html">S.Android 工具使用(27)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_30" href="http://www.cnblogs.com/linlf03/category/436146.html">S.Java(9)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_31" href="http://www.cnblogs.com/linlf03/category/480597.html">S.Linux(11)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_32" href="http://www.cnblogs.com/linlf03/category/307879.html">其它(30)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_0_Link_33" href="http://www.cnblogs.com/linlf03/category/338669.html">生活(8)</a>
+				</li>
+			
+				</ul>
+			</div>
+	
+		<div id="cell">
+		<img src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/icon-group.jpg" hspace="5" align="left" vspace="2"><h3>随笔档案<span style="font-size:11px;font-weight:normal">(343)</span></h3>
+		
+				<ul>
+			
+				<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/linlf03/archive/2014/11.html">2014年11月 (2)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/linlf03/archive/2014/10.html">2014年10月 (1)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/linlf03/archive/2014/07.html">2014年7月 (4)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/linlf03/archive/2014/06.html">2014年6月 (2)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/linlf03/archive/2014/04.html">2014年4月 (6)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/linlf03/archive/2014/03.html">2014年3月 (3)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/linlf03/archive/2014/02.html">2014年2月 (2)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/linlf03/archive/2014/01.html">2014年1月 (2)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/linlf03/archive/2013/12.html">2013年12月 (6)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/linlf03/archive/2013/11.html">2013年11月 (8)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/linlf03/archive/2013/10.html">2013年10月 (3)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/linlf03/archive/2013/09.html">2013年9月 (5)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/linlf03/archive/2013/08.html">2013年8月 (8)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/linlf03/archive/2013/07.html">2013年7月 (1)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/linlf03/archive/2013/06.html">2013年6月 (8)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/linlf03/archive/2013/05.html">2013年5月 (10)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_16" href="http://www.cnblogs.com/linlf03/archive/2013/04.html">2013年4月 (8)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_17" href="http://www.cnblogs.com/linlf03/archive/2013/03.html">2013年3月 (33)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_18" href="http://www.cnblogs.com/linlf03/archive/2013/01.html">2013年1月 (7)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_19" href="http://www.cnblogs.com/linlf03/archive/2012/12.html">2012年12月 (10)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_20" href="http://www.cnblogs.com/linlf03/archive/2012/11.html">2012年11月 (2)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_21" href="http://www.cnblogs.com/linlf03/archive/2012/10.html">2012年10月 (2)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_22" href="http://www.cnblogs.com/linlf03/archive/2012/09.html">2012年9月 (2)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_23" href="http://www.cnblogs.com/linlf03/archive/2012/08.html">2012年8月 (3)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_24" href="http://www.cnblogs.com/linlf03/archive/2012/07.html">2012年7月 (6)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_25" href="http://www.cnblogs.com/linlf03/archive/2012/06.html">2012年6月 (7)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_26" href="http://www.cnblogs.com/linlf03/archive/2012/03.html">2012年3月 (18)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_27" href="http://www.cnblogs.com/linlf03/archive/2012/02.html">2012年2月 (17)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_28" href="http://www.cnblogs.com/linlf03/archive/2012/01.html">2012年1月 (13)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_29" href="http://www.cnblogs.com/linlf03/archive/2011/12.html">2011年12月 (26)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_30" href="http://www.cnblogs.com/linlf03/archive/2011/11.html">2011年11月 (48)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_31" href="http://www.cnblogs.com/linlf03/archive/2011/10.html">2011年10月 (13)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_32" href="http://www.cnblogs.com/linlf03/archive/2011/09.html">2011年9月 (28)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_33" href="http://www.cnblogs.com/linlf03/archive/2011/08.html">2011年8月 (17)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_34" href="http://www.cnblogs.com/linlf03/archive/2011/07.html">2011年7月 (7)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_35" href="http://www.cnblogs.com/linlf03/archive/2011/05.html">2011年5月 (3)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_36" href="http://www.cnblogs.com/linlf03/archive/2011/04.html">2011年4月 (1)</a>
+				</li>
+			
+				<li><a id="CatList_LinkList_1_Link_37" href="http://www.cnblogs.com/linlf03/archive/2011/03.html">2011年3月 (1)</a>
+				</li>
+			
+				</ul>
+			</div>
+	
+		<div id="cell">
+		<img src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/icon-group.jpg" hspace="5" align="left" vspace="2"><h3>www.baidu.com</h3>
+		</div>
+	<div id="recent_comments_wrap">
+    <div id="cell">
+        <img src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/icon-group.jpg" hspace="5" align="left" vspace="2">
+        <h3>最新评论</h3>
+        <div class="RecentComment">
+            <div id="RecentCommentsBlock"><ul>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/linlf03/p/3296323.html#3096633">1. Re:Android中Service的使用详解和注意点（LocalService）</a></li>
+    <li class="recent_comment_body">好文要顶！</li>
+    <li class="recent_comment_author">--那夜微凉</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/linlf03/p/3296323.html#3055607">2. Re:Android中Service的使用详解和注意点（LocalService）</a></li>
+    <li class="recent_comment_body">好文章啊</li>
+    <li class="recent_comment_author">--climberDing</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/linlf03/archive/2011/09/09/2172370.html#3047084">3. Re:WPF 获得DataTemplate中的控件</a></li>
+    <li class="recent_comment_body">ContentPresenter contentpresenter = FindFirstVisualChild(myListBoxItem);public T FindFirstVisualChild2(DependencyObject obj, string childName) where T......</li>
+    <li class="recent_comment_author">--stonewolf</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/linlf03/archive/2011/12/16/2290397.html#3016158">4. Re:html5 图片旋转</a></li>
+    <li class="recent_comment_body">图片不是原地旋转的！</li>
+    <li class="recent_comment_author">--leerh</li>
+    <li class="recent_comment_title"><a href="http://www.cnblogs.com/linlf03/archive/2013/01/17/2865251.html#2992056">5. Re:java实现文件单词频率统计</a></li>
+    <li class="recent_comment_body">很好~</li>
+    <li class="recent_comment_author">--规格严格-功夫到家</li>
+</ul>
+</div>
+        </div>
+    </div>
+</div>
+<div id="topview_posts_wrap">
+    <div id="cell">
+        <img src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/icon-group.jpg" hspace="5" align="left" vspace="2">
+        <h3>阅读排行榜</h3>
+        <div class="RecentComment">
+            <div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/linlf03/archive/2012/02/29/2373202.html">1. .NET Framework 4.5新特性(18313)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/12/09/2282574.html">2. C# Dictionary用法总结(14500)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/01/01/2309645.html">3. JQuery 淡出、 动画、显示/隐藏切换等效果(10524)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2013/03/15/2961430.html">4. Android 中PopupWindow使用(9738)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/10/26/2224732.html">5. Perforce使用指南_forP4V(7613)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/11/30/2268705.html">6. C#操作xml SelectNodes,SelectSingleNode总是返回NULL 与 xPath 介绍(7555)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/03/27/2403972.html">7. ContextMenu的使用(7322)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/12/16/2290397.html">8. html5 图片旋转(6544)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/01/01/2309666.html">9. jQuery HTML 操作 改变/添加文本值(6483)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/12/07/2807699.html">10. Eclipse工具使用技巧总结(6029)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/12/26/2227674.html">11. WPF popup控件的使用(6027)</a></li><li><a href="http://www.cnblogs.com/linlf03/p/3484181.html">12. 安装Android sdk 4.4(19)出现问题的解决方案(5146)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/12/01/2797360.html">13. 创建Android的Hello World应用程序(4968)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/09/06/2168440.html">14. WPF 绑定各种数据源之Datatable(4804)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/12/16/2820677.html">15. Java 使用execute方法执行Sql语句(4787)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/08/16/2140127.html">16. WPF ListBox(4780)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/12/01/2797307.html">17. 如何使用Android中的Sample(4564)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/11/24/2261313.html">18. VS2008 Debug与Release的本质区别(4264)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/12/23/2299009.html">19. css  &lt;meta name="viewport" content="xx"&gt;(4262)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/11/16/2251318.html">20. C++ AFX_MANAGE_STATE(AfxGetStaticModuleState())的作用(4245)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/09/01/2043139.html">21. wpf 多线程(4107)</a></li><li><a href="http://www.cnblogs.com/linlf03/p/3267732.html">22. Android 文件的选择(4059)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/05/23/2053962.html">23. word 2007中在页眉中插入或这删除下划线(3956)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/11/08/2241135.html">24. WPF Button 透明效果(3859)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/09/11/2173833.html">25. WPF 一个MVVM的简单例子(3770)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/01/11/2318945.html">26. CSS3 rotate(3563)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/12/16/2820574.html">27. Eclipse 连接MySql数据库总结(3405)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/09/09/2172370.html">28. WPF 获得DataTemplate中的控件(3188)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/10/08/2201713.html">29. C#  方法使用汇总（GetEnumerator用法，？？用法等）(3169)</a></li><li><a href="http://www.cnblogs.com/linlf03/p/3296323.html">30. Android中Service的使用详解和注意点（LocalService）(3129)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/11/18/2254233.html">31. C++ VS 2008中ATL的创建，使用。并在C++项目以及C#项目中进行调用测试(3094)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/10/29/2228430.html">32. WPF 附加属性(3094)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/02/06/2340170.html">33. Virtual Machine虚拟机原理(2698)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/11/03/2234424.html">34. C# Serializable对象序列化的作用(2683)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/12/15/2285953.html">35. 使用 EPUB 制作数字图书    基于 XML 的开放式 eBook 格式(2610)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2013/03/14/2959585.html">36. Android 中AlterDialog使用(2587)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/11/14/2248326.html">37. WPF TreeView(2473)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/03/13/2392278.html">38. Metro Style App开发快速入门 之XML文件读取，修改，保存等操作(2451)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/03/15/2398338.html">39. Metro Style App开发快速入门 之基本控件使用总结(2363)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/03/12/2391987.html">40. Metro Style App开发快速入门 之文件访问操作示例(2310)</a></li></ul></div>
+        </div>
+    </div>
+</div><div id="topfeedback_posts_wrap">
+    <div id="cell">
+        <img src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/icon-group.jpg" hspace="5" align="left" vspace="2">
+        <h3>评论排行榜</h3>
+        <div class="RecentComment">
+            <div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/linlf03/archive/2011/09/11/2173833.html">1. WPF 一个MVVM的简单例子(9)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/12/16/2290397.html">2. html5 图片旋转(6)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/03/13/2392278.html">3. Metro Style App开发快速入门 之XML文件读取，修改，保存等操作(5)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/09/18/2690354.html">4. 要么滚回去，要么拼命(4)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/07/26/2609381.html">5. 我看Win8 Metro C++(4)</a></li></ul></div>
+        </div>
+    </div>    
+</div>
+<div id="topdigg_posts_wrap">
+<div id="cell">
+<img src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/icon-group.jpg" hspace="5" align="left" vspace="2"><h3>推荐排行榜</h3>
+<div class="RecentComment">
+	<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/linlf03/archive/2011/12/09/2282574.html">1. C# Dictionary用法总结(5)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/03/12/2391987.html">2. Metro Style App开发快速入门 之文件访问操作示例(4)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/03/13/2392278.html">3. Metro Style App开发快速入门 之XML文件读取，修改，保存等操作(3)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/09/01/2043139.html">4. wpf 多线程(3)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/08/16/2140127.html">5. WPF ListBox(3)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/04/08/2009569.html">6. MVVM设计模式(2)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/05/09/2041657.html">7. 委托和事件（无参数事件和有参数事件）(2)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/09/14/2176349.html">8. WPF 制作模板页示例(2)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/09/13/2174365.html">9. 长时间用电脑该如何保护眼睛(2)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/09/06/2169241.html">10. ListBox 单击变大动画效果（使用模板、样式、绑定数据源等）(2)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/02/20/2359009.html">11. SQLite快速入门二--表、视图的创建、修改、删除操作(2)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/02/29/2373202.html">12. .NET Framework 4.5新特性(2)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/08/12/2135683.html">13. WPF 使用值转换器进行绑定数据的转换IValueConverter(2)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/03/15/2398338.html">14. Metro Style App开发快速入门 之基本控件使用总结(2)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/03/14/2394357.html">15. Metro Style App开发快速入门  之资源操作(2)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/11/08/2241355.html">16. VC++ MFC 过时了吗(转)(2)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/10/29/2228430.html">17. WPF 附加属性(2)</a></li><li><a href="http://www.cnblogs.com/linlf03/p/3484181.html">18. 安装Android sdk 4.4(19)出现问题的解决方案(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/p/3296323.html">19. Android中Service的使用详解和注意点（LocalService）(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/p/3267732.html">20. Android 文件的选择(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/p/3241161.html">21. 删除Android自带软件方法及adb remount 失败解决方案(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/10/23/2735450.html">22. Win 8 自定义设置面版(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/09/18/2690354.html">23. 要么滚回去，要么拼命(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/07/26/2609398.html">24. Metro C++ 初体验 第一周(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/03/14/2395642.html">25. 一个10年程序员给大家的忠告(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/05/04/2036360.html">26. C#弱引用(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/02/21/2360851.html">27. 安装win7、win8双系统简单方法(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/02/20/2359410.html">28. SQLite快速入门 --函数的使用(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/02/29/2373855.html">29. Win 8中WPF  listview与listBox的Drag、Drop操作(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/02/20/2358955.html">30. SQLite学习快速入门-- 基础介绍(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/02/17/2355575.html">31. 八招防电脑辐射 你学会了吗？(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/02/10/2345988.html">32. Win 8 快捷键总结(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/02/06/2340287.html">33. 给JavaScript新手的24条实用建议(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/02/01/2334521.html">34. 程序员的5种类型(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2012/02/01/2334503.html">35. 为什么程序员都是夜猫子？(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/p/3822307.html">36. Android 隐藏Fragment(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/09/06/2168597.html">37. WPF绑定各种数据源之xml数据源(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/09/06/2168600.html">38. WPF绑定各种数据源之元素控件属性(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/09/06/2168440.html">39. WPF 绑定各种数据源之Datatable(1)</a></li><li><a href="http://www.cnblogs.com/linlf03/archive/2011/09/11/2173833.html">40. WPF 一个MVVM的简单例子(1)</a></li></ul></div>
+</div>
+</div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+		</td>
+		<td class="MainCell">
+			<div id="main">
+				
+
+	<div class="post">
+		<div class="posthead">
+			<h2>
+				<a id="cb_post_title_url" class="singleposttitle" href="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/Android MediaProvider数据库模式 - work hard work smart - 博客园.htm">Android MediaProvider数据库模式</a>
+			</h2>
+ 			Posted on <span id="post-date">2013-12-16 17:06</span> <a href="http://www.cnblogs.com/linlf03/">work hard work smart</a> 阅读(<span id="post_view_count">819</span>) 评论(<span id="post_comment_count">0</span>)  <a href="http://i.cnblogs.com/EditPosts.aspx?postid=3477077" rel="nofollow">编辑</a> <a href="http://www.cnblogs.com/linlf03/p/3477077.html#" onclick="AddToWz(3477077);return false;">收藏</a>
+			<script type="text/javascript">var allowComments=true,isLogined=false,cb_blogId=86147,cb_entryId=3477077,cb_blogApp=currentBlogApp,cb_blogUserGuid='2a24311a-9ebf-df11-ac81-842b2b196315',cb_entryCreatedDate='2013/12/16 17:06:00';loadViewCount(cb_entryId);</script>
+			
+		</div>
+		<div class="postbody"><div id="cnblogs_post_body"><h3 style="text-align: center;"><strong>Android MediaProvider数据库模式</strong></h3>
+<p style="text-align: center;"><a href="http://my.oschina.net/Failure/blog/53203"><strong>原文地址</strong></a></p>
+<p><strong>摘要</strong>： Android MediaProvider 使用 SQLite 数据库存储图片、视频、音频等多媒体文件的信息，供视频播放器、音乐播放器、图库使用。本文详细分析了 Android MediaProvider 多媒体数据库（以 SDK 2.3.3 为例）的模式（schema），并简要叙述与系统媒体扫描服务 MediaScanner 的交互。</p>
+<p>&nbsp;</p>
+<h1>1. 如何提取数据库</h1>
+<p>以 root 权限进入 adb shell，使用 sqlite3 打开位于手机上 <strong>/data/data/com.android.providers.media/databases</strong> 上的一个数据库。以 external 开头的数据库存储的是 SD 卡媒体信息，一张卡对应一个，所以如果手机使用过多张卡会有多个数据库。以 internal 开头的数据库存储手机内部存储器的媒体信息。因为一般用户无法访问手机内部存储器，而且这两个数据库结构是大体上是相同的，所以只需要关注 external 数据库即可。</p>
+<p><strong>Note:</strong> 数据库都是以类似 external-ffffffff.db 的形式命名的， 后面的 8 个 16 进制字符是该 SD 卡 FAT 分区的 Volume ID。该 ID 是分区时决定的，只有重新分区或者手动改变才会更改，可以防止插入不同 SD 卡时数据库冲突。要简单了解 FAT 文件系统请看<a href="http://www.pjrc.com/tech/8051/ide/fat32.html" rel="nofollow" target="_blank"> Understanding FAT Filesystems </a></p>
+<p>接着在 sqlite3 执行命令 .schema 即可导出创建数据库的 SQL 语句，也就是数据库模式，具体如下（单击展开代码）：</p>
+<p>&nbsp;</p>
+<div class="syntaxhighlighter collapsed sql">
+<div class="bar ">
+<div class="toolbar">
+<div class="lines">
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>CREATE</code> <code>TABLE</code> <code>album_art (album_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,_data TEXT); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>2</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>albums (album_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,album_key TEXT </code><code>NOT</code> <code>NULL</code> <code>UNIQUE</code><code>,album TEXT </code><code>NOT</code> <code>NULL</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>3</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>android_metadata (locale TEXT); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>4</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>artists (artist_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,artist_key TEXT </code><code>NOT</code> <code>NULL</code> <code>UNIQUE</code><code>,artist TEXT </code><code>NOT</code> <code>NULL</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>5</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>audio_genres (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,</code><code>name</code> <code>TEXT </code><code>NOT</code> <code>NULL</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>6</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>audio_genres_map (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,audio_id </code><code>INTEGER</code> <code>NOT</code> <code>NULL</code><code>,genre_id </code><code>INTEGER</code> <code>NOT</code> <code>NULL</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>7</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>audio_meta (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,_data TEXT </code><code>UNIQUE</code> <code>NOT</code> <code>NULL</code><code>,_display_name TEXT,_size </code><code>INTEGER</code><code>,mime_type TEXT,date_added </code><code>INTEGER</code><code>,date_modified </code><code>INTEGER</code><code>,title TEXT </code><code>NOT</code> <code>NULL</code><code>,title_key TEXT </code><code>NOT</code> <code>NULL</code><code>,duration </code><code>INTEGER</code><code>,artist_id </code><code>INTEGER</code><code>,composer TEXT,album_id </code><code>INTEGER</code><code>,track </code><code>INTEGER</code><code>,</code><code>year</code> <code>INTEGER</code> <code>CHECK</code><code>(</code><code>year</code><code>!=0),is_ringtone </code><code>INTEGER</code><code>,is_music </code><code>INTEGER</code><code>,is_alarm </code><code>INTEGER</code><code>,is_notification </code><code>INTEGER</code><code>, is_podcast </code><code>INTEGER</code><code>, bookmark </code><code>INTEGER</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>8</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>audio_playlists (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,_data TEXT,</code><code>name</code> <code>TEXT </code><code>NOT</code> <code>NULL</code><code>,date_added </code><code>INTEGER</code><code>,date_modified </code><code>INTEGER</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>9</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>audio_playlists_map (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,audio_id </code><code>INTEGER</code> <code>NOT</code> <code>NULL</code><code>,playlist_id </code><code>INTEGER</code> <code>NOT</code> <code>NULL</code><code>,play_order </code><code>INTEGER</code> <code>NOT</code> <code>NULL</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>10</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>images (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,_data TEXT,_size </code><code>INTEGER</code><code>,_display_name TEXT,mime_type TEXT,title TEXT,date_added </code><code>INTEGER</code><code>,date_modified </code><code>INTEGER</code><code>,description TEXT,picasa_id TEXT,isprivate </code><code>INTEGER</code><code>,latitude </code><code>DOUBLE</code><code>,longitude </code><code>DOUBLE</code><code>,datetaken </code><code>INTEGER</code><code>,orientation </code><code>INTEGER</code><code>,mini_thumb_magic </code><code>INTEGER</code><code>,bucket_id TEXT,bucket_display_name TEXT); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>11</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>thumbnails (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,_data TEXT,image_id </code><code>INTEGER</code><code>,kind </code><code>INTEGER</code><code>,width </code><code>INTEGER</code><code>,height </code><code>INTEGER</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>12</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>video (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,_data TEXT </code><code>NOT</code> <code>NULL</code><code>,_display_name TEXT,_size </code><code>INTEGER</code><code>,mime_type TEXT,date_added </code><code>INTEGER</code><code>,date_modified </code><code>INTEGER</code><code>,title TEXT,duration </code><code>INTEGER</code><code>,artist TEXT,album TEXT,resolution TEXT,description TEXT,isprivate </code><code>INTEGER</code><code>,tags TEXT,category TEXT,language TEXT,mini_thumb_data TEXT,latitude </code><code>DOUBLE</code><code>,longitude </code><code>DOUBLE</code><code>,datetaken </code><code>INTEGER</code><code>,mini_thumb_magic </code><code>INTEGER</code><code>, bucket_id TEXT, bucket_display_name TEXT, bookmark </code><code>INTEGER</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>13</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>videothumbnails (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,_data TEXT,video_id </code><code>INTEGER</code><code>,kind </code><code>INTEGER</code><code>,width </code><code>INTEGER</code><code>,height </code><code>INTEGER</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>14</code></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>15</code></td>
+<td><code>CREATE</code> <code>VIEW</code> <code>album_info </code><code>AS</code> <code>SELECT</code> <code>audio.album_id </code><code>AS</code> <code>_id, album, album_key, </code><code>MIN</code><code>(</code><code>year</code><code>) </code><code>AS</code> <code>minyear, </code><code>MAX</code><code>(</code><code>year</code><code>) </code><code>AS</code> <code>maxyear, artist, artist_id, artist_key, </code><code>count</code><code>(*) </code><code>AS</code> <code>numsongs,album_art._data </code><code>AS</code> <code>album_art </code><code>FROM</code> <code>audio </code><code>LEFT</code> <code>OUTER</code> <code>JOIN</code> <code>album_art </code><code>ON</code> <code>audio.album_id=album_art.album_id </code><code>WHERE</code> <code>is_music=1 </code><code>GROUP</code> <code>BY</code> <code>audio.album_id; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>16</code></td>
+<td><code>CREATE</code> <code>VIEW</code> <code>artist_info </code><code>AS</code> <code>SELECT</code> <code>artist_id </code><code>AS</code> <code>_id, artist, artist_key, </code><code>COUNT</code><code>(</code><code>DISTINCT</code> <code>album_key) </code><code>AS</code> <code>number_of_albums, </code><code>COUNT</code><code>(*) </code><code>AS</code> <code>number_of_tracks </code><code>FROM</code> <code>audio </code><code>WHERE</code> <code>is_music=1 </code><code>GROUP</code> <code>BY</code> <code>artist_key; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>17</code></td>
+<td><code>CREATE</code> <code>VIEW</code> <code>artists_albums_map </code><code>AS</code> <code>SELECT</code> <code>DISTINCT</code> <code>artist_id, album_id </code><code>FROM</code> <code>audio_meta; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>18</code></td>
+<td><code>CREATE</code> <code>VIEW</code> <code>audio </code><code>as</code> <code>SELECT</code> <code>* </code><code>FROM</code> <code>audio_meta </code><code>LEFT</code> <code>OUTER</code> <code>JOIN</code> <code>artists </code><code>ON</code> <code>audio_meta.artist_id=artists.artist_id </code><code>LEFT</code> <code>OUTER</code> <code>JOIN</code> <code>albums </code><code>ON</code> <code>audio_meta.album_id=albums.album_id; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>19</code></td>
+<td><code>CREATE</code> <code>VIEW</code> <code>search </code><code>AS</code> <code>SELECT</code> <code>_id,</code><code>'artist'</code> <code>AS</code> <code>mime_type,artist,</code><code>NULL</code> <code>AS</code> <code>album,</code><code>NULL</code> <code>AS</code> <code>title,artist </code><code>AS</code> <code>text1,</code><code>NULL</code> <code>AS</code> <code>text2,number_of_albums </code><code>AS</code> <code>data1,number_of_tracks </code><code>AS</code> <code>data2,artist_key </code><code>AS</code> <code>match,</code><code>'content://media/external/audio/artists/'</code><code>||_id </code><code>AS</code> <code>suggest_intent_data,1 </code><code>AS</code> <code>grouporder </code><code>FROM</code> <code>artist_info </code><code>WHERE</code> <code>(artist!=</code><code>'&lt;unknown&gt;'</code><code>) </code><code>UNION</code> <code>ALL</code> <code>SELECT</code> <code>_id,</code><code>'album'</code> <code>AS</code> <code>mime_type,artist,album,</code><code>NULL</code> <code>AS</code> <code>title,album </code><code>AS</code> <code>text1,artist </code><code>AS</code> <code>text2,</code><code>NULL</code> <code>AS</code> <code>data1,</code><code>NULL</code> <code>AS</code> <code>data2,artist_key||</code><code>' '</code><code>||album_key </code><code>AS</code> <code>match,</code><code>'content://media/external/audio/albums/'</code><code>||_id </code><code>AS</code> <code>suggest_intent_data,2 </code><code>AS</code> <code>grouporder </code><code>FROM</code> <code>album_info </code><code>WHERE</code> <code>(album!=</code><code>'&lt;unknown&gt;'</code><code>) </code><code>UNION</code> <code>ALL</code> <code>SELECT</code> <code>searchhelpertitle._id </code><code>AS</code> <code>_id,mime_type,artist,album,title,title </code><code>AS</code> <code>text1,artist </code><code>AS</code> <code>text2,</code><code>NULL</code> <code>AS</code> <code>data1,</code><code>NULL</code> <code>AS</code> <code>data2,artist_key||</code><code>' '</code><code>||album_key||</code><code>' '</code><code>||title_key </code><code>AS</code> <code>match,</code><code>'content://media/external/audio/media/'</code><code>||searchhelpertitle._id </code><code>AS</code> <code>suggest_intent_data,3 </code><code>AS</code> <code>grouporder </code><code>FROM</code> <code>searchhelpertitle </code><code>WHERE</code> <code>(title != </code><code>''</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>20</code></td>
+<td><code>CREATE</code> <code>VIEW</code> <code>searchhelpertitle </code><code>AS</code> <code>SELECT</code> <code>* </code><code>FROM</code> <code>audio </code><code>ORDER</code> <code>BY</code> <code>title_key; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>21</code></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>22</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>album_id_idx </code><code>on</code> <code>audio_meta(album_id); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>23</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>album_idx </code><code>on</code> <code>albums(album); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>24</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>albumkey_index </code><code>on</code> <code>albums(album_key); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>25</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>artist_id_idx </code><code>on</code> <code>audio_meta(artist_id); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>26</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>artist_idx </code><code>on</code> <code>artists(artist); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>27</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>artistkey_index </code><code>on</code> <code>artists(artist_key); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>28</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>image_bucket_index </code><code>ON</code> <code>images(bucket_id, datetaken); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>29</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>image_id_index </code><code>on</code> <code>thumbnails(image_id); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>30</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>sort_index </code><code>on</code> <code>images(datetaken </code><code>ASC</code><code>, _id </code><code>ASC</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>31</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>title_idx </code><code>on</code> <code>audio_meta(title); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>32</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>titlekey_index </code><code>on</code> <code>audio_meta(title_key); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>33</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>video_bucket_index </code><code>ON</code> <code>video(bucket_id, datetaken); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>34</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>video_id_index </code><code>on</code> <code>videothumbnails(video_id); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>35</code></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>36</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>albumart_cleanup1 </code><code>DELETE</code> <code>ON</code> <code>albums </code><code>BEGIN</code> <code>DELETE</code> <code>FROM</code> <code>album_art </code><code>WHERE</code> <code>album_id = old.album_id;</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>37</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>albumart_cleanup2 </code><code>DELETE</code> <code>ON</code> <code>album_art </code><code>BEGIN</code> <code>SELECT</code> <code>_DELETE_FILE(old._data);</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>38</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>audio_delete </code><code>INSTEAD</code> <code>OF</code> <code>DELETE</code> <code>ON</code> <code>audio </code><code>BEGIN</code> <code>DELETE</code> <code>from</code> <code>audio_meta </code><code>where</code> <code>_id=old._id;</code><code>DELETE</code> <code>from</code> <code>audio_playlists_map </code><code>where</code> <code>audio_id=old._id;</code><code>DELETE</code> <code>from</code> <code>audio_genres_map </code><code>where</code> <code>audio_id=old._id;</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>39</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>audio_genres_cleanup </code><code>DELETE</code> <code>ON</code> <code>audio_genres </code><code>BEGIN</code> <code>DELETE</code> <code>FROM</code> <code>audio_genres_map </code><code>WHERE</code> <code>genre_id = old._id;</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>40</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>audio_meta_cleanup </code><code>DELETE</code> <code>ON</code> <code>audio_meta </code><code>BEGIN</code> <code>DELETE</code> <code>FROM</code> <code>audio_genres_map </code><code>WHERE</code> <code>audio_id = old._id;</code><code>DELETE</code> <code>FROM</code> <code>audio_playlists_map </code><code>WHERE</code> <code>audio_id = old._id;</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>41</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>audio_playlists_cleanup </code><code>DELETE</code> <code>ON</code> <code>audio_playlists </code><code>BEGIN</code> <code>DELETE</code> <code>FROM</code> <code>audio_playlists_map </code><code>WHERE</code> <code>playlist_id = old._id;</code><code>SELECT</code> <code>_DELETE_FILE(old._data);</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>42</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>images_cleanup </code><code>DELETE</code> <code>ON</code> <code>images </code><code>BEGIN</code> <code>DELETE</code> <code>FROM</code> <code>thumbnails </code><code>WHERE</code> <code>image_id = old._id;</code><code>SELECT</code> <code>_DELETE_FILE(old._data);</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>43</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>thumbnails_cleanup </code><code>DELETE</code> <code>ON</code> <code>thumbnails </code><code>BEGIN</code> <code>SELECT</code> <code>_DELETE_FILE(old._data);</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>44</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>video_cleanup </code><code>DELETE</code> <code>ON</code> <code>video </code><code>BEGIN</code> <code>SELECT</code> <code>_DELETE_FILE(old._data);</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>45</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>videothumbnails_cleanup </code><code>DELETE</code> <code>ON</code> <code>videothumbnails </code><code>BEGIN</code> <code>SELECT</code> <code>_DELETE_FILE(old._data);</code><code>END</code><code>;</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="lines">
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>album_art (album_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,_data TEXT); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>2</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>albums (album_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,album_key TEXT </code><code>NOT</code> <code>NULL</code> <code>UNIQUE</code><code>,album TEXT </code><code>NOT</code> <code>NULL</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>3</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>android_metadata (locale TEXT); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>4</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>artists (artist_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,artist_key TEXT </code><code>NOT</code> <code>NULL</code> <code>UNIQUE</code><code>,artist TEXT </code><code>NOT</code> <code>NULL</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>5</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>audio_genres (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,</code><code>name</code> <code>TEXT </code><code>NOT</code> <code>NULL</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>6</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>audio_genres_map (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,audio_id </code><code>INTEGER</code> <code>NOT</code> <code>NULL</code><code>,genre_id </code><code>INTEGER</code> <code>NOT</code> <code>NULL</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>7</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>audio_meta (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,_data TEXT </code><code>UNIQUE</code> <code>NOT</code> <code>NULL</code><code>,_display_name TEXT,_size </code><code>INTEGER</code><code>,mime_type TEXT,date_added </code><code>INTEGER</code><code>,date_modified </code><code>INTEGER</code><code>,title TEXT </code><code>NOT</code> <code>NULL</code><code>,title_key TEXT </code><code>NOT</code> <code>NULL</code><code>,duration </code><code>INTEGER</code><code>,artist_id </code><code>INTEGER</code><code>,composer TEXT,album_id </code><code>INTEGER</code><code>,track </code><code>INTEGER</code><code>,</code><code>year</code> <code>INTEGER</code> <code>CHECK</code><code>(</code><code>year</code><code>!=0),is_ringtone </code><code>INTEGER</code><code>,is_music </code><code>INTEGER</code><code>,is_alarm </code><code>INTEGER</code><code>,is_notification </code><code>INTEGER</code><code>, is_podcast </code><code>INTEGER</code><code>, bookmark </code><code>INTEGER</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>8</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>audio_playlists (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,_data TEXT,</code><code>name</code> <code>TEXT </code><code>NOT</code> <code>NULL</code><code>,date_added </code><code>INTEGER</code><code>,date_modified </code><code>INTEGER</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>9</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>audio_playlists_map (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,audio_id </code><code>INTEGER</code> <code>NOT</code> <code>NULL</code><code>,playlist_id </code><code>INTEGER</code> <code>NOT</code> <code>NULL</code><code>,play_order </code><code>INTEGER</code> <code>NOT</code> <code>NULL</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>10</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>images (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,_data TEXT,_size </code><code>INTEGER</code><code>,_display_name TEXT,mime_type TEXT,title TEXT,date_added </code><code>INTEGER</code><code>,date_modified </code><code>INTEGER</code><code>,description TEXT,picasa_id TEXT,isprivate </code><code>INTEGER</code><code>,latitude </code><code>DOUBLE</code><code>,longitude </code><code>DOUBLE</code><code>,datetaken </code><code>INTEGER</code><code>,orientation </code><code>INTEGER</code><code>,mini_thumb_magic </code><code>INTEGER</code><code>,bucket_id TEXT,bucket_display_name TEXT); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>11</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>thumbnails (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,_data TEXT,image_id </code><code>INTEGER</code><code>,kind </code><code>INTEGER</code><code>,width </code><code>INTEGER</code><code>,height </code><code>INTEGER</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>12</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>video (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,_data TEXT </code><code>NOT</code> <code>NULL</code><code>,_display_name TEXT,_size </code><code>INTEGER</code><code>,mime_type TEXT,date_added </code><code>INTEGER</code><code>,date_modified </code><code>INTEGER</code><code>,title TEXT,duration </code><code>INTEGER</code><code>,artist TEXT,album TEXT,resolution TEXT,description TEXT,isprivate </code><code>INTEGER</code><code>,tags TEXT,category TEXT,language TEXT,mini_thumb_data TEXT,latitude </code><code>DOUBLE</code><code>,longitude </code><code>DOUBLE</code><code>,datetaken </code><code>INTEGER</code><code>,mini_thumb_magic </code><code>INTEGER</code><code>, bucket_id TEXT, bucket_display_name TEXT, bookmark </code><code>INTEGER</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>13</code></td>
+<td><code>CREATE</code> <code>TABLE</code> <code>videothumbnails (_id </code><code>INTEGER</code> <code>PRIMARY</code> <code>KEY</code><code>,_data TEXT,video_id </code><code>INTEGER</code><code>,kind </code><code>INTEGER</code><code>,width </code><code>INTEGER</code><code>,height </code><code>INTEGER</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>14</code></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>15</code></td>
+<td><code>CREATE</code> <code>VIEW</code> <code>album_info </code><code>AS</code> <code>SELECT</code> <code>audio.album_id </code><code>AS</code> <code>_id, album, album_key, </code><code>MIN</code><code>(</code><code>year</code><code>) </code><code>AS</code> <code>minyear, </code><code>MAX</code><code>(</code><code>year</code><code>) </code><code>AS</code> <code>maxyear, artist, artist_id, artist_key, </code><code>count</code><code>(*) </code><code>AS</code> <code>numsongs,album_art._data </code><code>AS</code> <code>album_art </code><code>FROM</code> <code>audio </code><code>LEFT</code> <code>OUTER</code> <code>JOIN</code> <code>album_art </code><code>ON</code> <code>audio.album_id=album_art.album_id </code><code>WHERE</code> <code>is_music=1 </code><code>GROUP</code> <code>BY</code> <code>audio.album_id; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>16</code></td>
+<td><code>CREATE</code> <code>VIEW</code> <code>artist_info </code><code>AS</code> <code>SELECT</code> <code>artist_id </code><code>AS</code> <code>_id, artist, artist_key, </code><code>COUNT</code><code>(</code><code>DISTINCT</code> <code>album_key) </code><code>AS</code> <code>number_of_albums, </code><code>COUNT</code><code>(*) </code><code>AS</code> <code>number_of_tracks </code><code>FROM</code> <code>audio </code><code>WHERE</code> <code>is_music=1 </code><code>GROUP</code> <code>BY</code> <code>artist_key; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>17</code></td>
+<td><code>CREATE</code> <code>VIEW</code> <code>artists_albums_map </code><code>AS</code> <code>SELECT</code> <code>DISTINCT</code> <code>artist_id, album_id </code><code>FROM</code> <code>audio_meta; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>18</code></td>
+<td><code>CREATE</code> <code>VIEW</code> <code>audio </code><code>as</code> <code>SELECT</code> <code>* </code><code>FROM</code> <code>audio_meta </code><code>LEFT</code> <code>OUTER</code> <code>JOIN</code> <code>artists </code><code>ON</code> <code>audio_meta.artist_id=artists.artist_id </code><code>LEFT</code> <code>OUTER</code> <code>JOIN</code> <code>albums </code><code>ON</code> <code>audio_meta.album_id=albums.album_id; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>19</code></td>
+<td><code>CREATE</code> <code>VIEW</code> <code>search </code><code>AS</code> <code>SELECT</code> <code>_id,</code><code>'artist'</code> <code>AS</code> <code>mime_type,artist,</code><code>NULL</code> <code>AS</code> <code>album,</code><code>NULL</code> <code>AS</code> <code>title,artist </code><code>AS</code> <code>text1,</code><code>NULL</code> <code>AS</code> <code>text2,number_of_albums </code><code>AS</code> <code>data1,number_of_tracks </code><code>AS</code> <code>data2,artist_key </code><code>AS</code> <code>match,</code><code>'content://media/external/audio/artists/'</code><code>||_id </code><code>AS</code> <code>suggest_intent_data,1 </code><code>AS</code> <code>grouporder </code><code>FROM</code> <code>artist_info </code><code>WHERE</code> <code>(artist!=</code><code>'&lt;unknown&gt;'</code><code>) </code><code>UNION</code> <code>ALL</code> <code>SELECT</code> <code>_id,</code><code>'album'</code> <code>AS</code> <code>mime_type,artist,album,</code><code>NULL</code> <code>AS</code> <code>title,album </code><code>AS</code> <code>text1,artist </code><code>AS</code> <code>text2,</code><code>NULL</code> <code>AS</code> <code>data1,</code><code>NULL</code> <code>AS</code> <code>data2,artist_key||</code><code>' '</code><code>||album_key </code><code>AS</code> <code>match,</code><code>'content://media/external/audio/albums/'</code><code>||_id </code><code>AS</code> <code>suggest_intent_data,2 </code><code>AS</code> <code>grouporder </code><code>FROM</code> <code>album_info </code><code>WHERE</code> <code>(album!=</code><code>'&lt;unknown&gt;'</code><code>) </code><code>UNION</code> <code>ALL</code> <code>SELECT</code> <code>searchhelpertitle._id </code><code>AS</code> <code>_id,mime_type,artist,album,title,title </code><code>AS</code> <code>text1,artist </code><code>AS</code> <code>text2,</code><code>NULL</code> <code>AS</code> <code>data1,</code><code>NULL</code> <code>AS</code> <code>data2,artist_key||</code><code>' '</code><code>||album_key||</code><code>' '</code><code>||title_key </code><code>AS</code> <code>match,</code><code>'content://media/external/audio/media/'</code><code>||searchhelpertitle._id </code><code>AS</code> <code>suggest_intent_data,3 </code><code>AS</code> <code>grouporder </code><code>FROM</code> <code>searchhelpertitle </code><code>WHERE</code> <code>(title != </code><code>''</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>20</code></td>
+<td><code>CREATE</code> <code>VIEW</code> <code>searchhelpertitle </code><code>AS</code> <code>SELECT</code> <code>* </code><code>FROM</code> <code>audio </code><code>ORDER</code> <code>BY</code> <code>title_key; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>21</code></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>22</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>album_id_idx </code><code>on</code> <code>audio_meta(album_id); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>23</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>album_idx </code><code>on</code> <code>albums(album); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>24</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>albumkey_index </code><code>on</code> <code>albums(album_key); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>25</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>artist_id_idx </code><code>on</code> <code>audio_meta(artist_id); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>26</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>artist_idx </code><code>on</code> <code>artists(artist); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>27</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>artistkey_index </code><code>on</code> <code>artists(artist_key); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>28</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>image_bucket_index </code><code>ON</code> <code>images(bucket_id, datetaken); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>29</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>image_id_index </code><code>on</code> <code>thumbnails(image_id); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>30</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>sort_index </code><code>on</code> <code>images(datetaken </code><code>ASC</code><code>, _id </code><code>ASC</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>31</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>title_idx </code><code>on</code> <code>audio_meta(title); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>32</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>titlekey_index </code><code>on</code> <code>audio_meta(title_key); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>33</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>video_bucket_index </code><code>ON</code> <code>video(bucket_id, datetaken); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>34</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>video_id_index </code><code>on</code> <code>videothumbnails(video_id); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>35</code></td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>36</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>albumart_cleanup1 </code><code>DELETE</code> <code>ON</code> <code>albums </code><code>BEGIN</code> <code>DELETE</code> <code>FROM</code> <code>album_art </code><code>WHERE</code> <code>album_id = old.album_id;</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>37</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>albumart_cleanup2 </code><code>DELETE</code> <code>ON</code> <code>album_art </code><code>BEGIN</code> <code>SELECT</code> <code>_DELETE_FILE(old._data);</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>38</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>audio_delete </code><code>INSTEAD</code> <code>OF</code> <code>DELETE</code> <code>ON</code> <code>audio </code><code>BEGIN</code> <code>DELETE</code> <code>from</code> <code>audio_meta </code><code>where</code> <code>_id=old._id;</code><code>DELETE</code> <code>from</code> <code>audio_playlists_map </code><code>where</code> <code>audio_id=old._id;</code><code>DELETE</code> <code>from</code> <code>audio_genres_map </code><code>where</code> <code>audio_id=old._id;</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>39</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>audio_genres_cleanup </code><code>DELETE</code> <code>ON</code> <code>audio_genres </code><code>BEGIN</code> <code>DELETE</code> <code>FROM</code> <code>audio_genres_map </code><code>WHERE</code> <code>genre_id = old._id;</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>40</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>audio_meta_cleanup </code><code>DELETE</code> <code>ON</code> <code>audio_meta </code><code>BEGIN</code> <code>DELETE</code> <code>FROM</code> <code>audio_genres_map </code><code>WHERE</code> <code>audio_id = old._id;</code><code>DELETE</code> <code>FROM</code> <code>audio_playlists_map </code><code>WHERE</code> <code>audio_id = old._id;</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>41</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>audio_playlists_cleanup </code><code>DELETE</code> <code>ON</code> <code>audio_playlists </code><code>BEGIN</code> <code>DELETE</code> <code>FROM</code> <code>audio_playlists_map </code><code>WHERE</code> <code>playlist_id = old._id;</code><code>SELECT</code> <code>_DELETE_FILE(old._data);</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>42</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>images_cleanup </code><code>DELETE</code> <code>ON</code> <code>images </code><code>BEGIN</code> <code>DELETE</code> <code>FROM</code> <code>thumbnails </code><code>WHERE</code> <code>image_id = old._id;</code><code>SELECT</code> <code>_DELETE_FILE(old._data);</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>43</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>thumbnails_cleanup </code><code>DELETE</code> <code>ON</code> <code>thumbnails </code><code>BEGIN</code> <code>SELECT</code> <code>_DELETE_FILE(old._data);</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>44</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>video_cleanup </code><code>DELETE</code> <code>ON</code> <code>video </code><code>BEGIN</code> <code>SELECT</code> <code>_DELETE_FILE(old._data);</code><code>END</code><code>; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>45</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>videothumbnails_cleanup </code><code>DELETE</code> <code>ON</code> <code>videothumbnails </code><code>BEGIN</code> <code>SELECT</code> <code>_DELETE_FILE(old._data);</code><code>END</code><code>;</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p><strong>Note</strong>: 如果手机没有 sqlite3 程序，可以搜索编译过的源代码的 out 目录找到可执行文件，大约 90kb，然后 adb push 到手机的 /system/bin/ 目录。安装 sqlite3、查询数据库均需要 adb root 权限。 Android 的多媒体数据库主要由<strong>表、视图、索引以及触发器</strong>组成。</p>
+<p>接着还需要把数据库转换成图，手工转换的话就是根据 SQL 语句自行画图；推荐懒人使用自动转换，先使用 adb pull 把数据库导出，再使用 Power Designer 或者 Visio 的<strong>逆向工程（Reverse Engineer）</strong>功能生成物理数据模型（Physical Data Model）。注意要连接 sqlite 数据库文件的话需要先安装 sqlite 的 ODBC 驱动，教程在这里：<a href="http://sites.google.com/site/gdoten/db/sqlite" rel="nofollow" target="_blank">SQLite ODBC Driver</a></p>
+<h1>2. 数据库模式分析</h1>
+<h2>图片数据库</h2>
+<p>图片数据库由两个表组成，分别是 images 和 thumbnails，物理数据模型如下所示（Power Designer 逆向工程生成）</p>
+<p><a href="http://www.otechu.me/wp-content/uploads/2011/09/images.jpg" target="_blank"><img style="cursor: pointer;" title="images" src="http://www.otechu.me/wp-content/uploads/2011/09/images.jpg" alt=""></a></p>
+<p><strong>Note</strong>: 如何数据库物理模型图：&lt;pk&gt; 表示此为主键。其余的表名、字段名、数据类型应该都能看明白。</p>
+<p><strong>Note</strong>: SQLite 从 3.6.19 版才开始支持外键约束，Android 2.3.3 使用的是 3.7.x，但并没有使用此特性，而是通过<strong>操作数据库的程序（如 MediaScanner）以及触发器</strong>来维护数据库的一致性。<a href="http://www.sqlite.org/foreignkeys.html" rel="nofollow" target="_blank">这里</a>可以了解 SQLite 的外键支持情况</p>
+<p>数据表字段解析如下：</p>
+images：图片信息&nbsp;&nbsp;
+<table border="1" cellspacing="1" cellpadding="1"><tbody>
+<tr><th>字段</th><th>解析</th></tr>
+</tbody>
+<tbody>
+<tr>
+<td>_id</td>
+<td>主键。图片 id，从 1 开始自增</td>
+</tr>
+<tr>
+<td>_data</td>
+<td>图片绝对路径</td>
+</tr>
+<tr>
+<td>_size</td>
+<td>文件大小，单位为 byte</td>
+</tr>
+<tr>
+<td>_display_name</td>
+<td>文件名</td>
+</tr>
+<tr>
+<td>mime_type</td>
+<td>类似于 image/jpeg 的 MIME 类型</td>
+</tr>
+<tr>
+<td>title</td>
+<td>不带扩展名的文件名</td>
+</tr>
+<tr>
+<td>date_added</td>
+<td>添加到数据库的时间，单位秒</td>
+</tr>
+<tr>
+<td>date_modified</td>
+<td>文件最后修改时间，单位秒</td>
+</tr>
+<tr>
+<td>description</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>picasa_id</td>
+<td>用于 picasa 网络相册</td>
+</tr>
+<tr>
+<td>isprivate</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>latitude</td>
+<td>纬度，需要照片有 GPS 信息</td>
+</tr>
+<tr>
+<td>longitude</td>
+<td>经度，需要照片有 GPS 信息</td>
+</tr>
+<tr>
+<td>datetaken</td>
+<td>取自 EXIF 照片拍摄时间，若为空则等于文件修改时间，单位毫秒</td>
+</tr>
+<tr>
+<td>orientation</td>
+<td>取自 EXIF 旋转角度，在图库旋转图片也会改变此值</td>
+</tr>
+<tr>
+<td>mini_thumb_magic</td>
+<td>取小缩略图时生成的一个随机数，见 MediaThumbRequest</td>
+</tr>
+<tr>
+<td>bucket_id</td>
+<td>等于 path.toLowerCase.hashCode()，见 MediaProvider.computeBucketValues()</td>
+</tr>
+<tr>
+<td>bucket_display_name</td>
+<td>直接包含图片的文件夹就是该图片的 bucket，就是文件夹名</td>
+</tr>
+</tbody>
+</table>
+thumbnails：缩略图&nbsp;&nbsp;
+<table border="1" cellspacing="1" cellpadding="1"><tbody>
+<tr><th>字段</th><th>解析</th></tr>
+</tbody>
+<tbody>
+<tr>
+<td>_id</td>
+<td>主键。缩略图 id，从 1 开始自增</td>
+</tr>
+<tr>
+<td>_data</td>
+<td>图片绝对路径</td>
+</tr>
+<tr>
+<td>image_id</td>
+<td>缩略图所对应图片的 id，依赖于 images 表 _id 字段，可建立外键</td>
+</tr>
+<tr>
+<td>kind</td>
+<td>缩略图类型，1 是大缩略图，2 基本不用，3 是微型缩略图但其信息不保存在数据库</td>
+</tr>
+<tr>
+<td>width</td>
+<td>缩略图宽度</td>
+</tr>
+<tr>
+<td>height</td>
+<td>缩略图高度</td>
+</tr>
+</tbody>
+</table>
+<h2>视频数据库</h2>
+<p><a href="http://www.otechu.me/wp-content/uploads/2011/09/video.jpg" target="_blank"><img style="cursor: pointer;" title="video" src="http://www.otechu.me/wp-content/uploads/2011/09/video.jpg" alt=""></a></p>
+<p>数据表字段解析如下：</p>
+video：视频信息&nbsp;&nbsp;
+<table border="1" cellspacing="1" cellpadding="1"><tbody>
+<tr><th>字段</th><th>解析</th></tr>
+</tbody>
+<tbody>
+<tr>
+<td>_id</td>
+<td>主键。视频 id</td>
+</tr>
+<tr>
+<td>_data</td>
+<td>视频绝对路径</td>
+</tr>
+<tr>
+<td>_display_name</td>
+<td>文件名</td>
+</tr>
+<tr>
+<td>_size</td>
+<td>文件大小，单位为 byte</td>
+</tr>
+<tr>
+<td>mime_type</td>
+<td>类似于 video/avi 的 MIME 类型</td>
+</tr>
+<tr>
+<td>date_added</td>
+<td>添加到数据库的时间，单位秒</td>
+</tr>
+<tr>
+<td>date_modified</td>
+<td>文件最后修改时间，单位秒</td>
+</tr>
+<tr>
+<td>title</td>
+<td>不带扩展名的文件名</td>
+</tr>
+<tr>
+<td>duration</td>
+<td>视频时长，单位毫秒</td>
+</tr>
+<tr>
+<td>artist</td>
+<td>艺术家</td>
+</tr>
+<tr>
+<td>album</td>
+<td>专辑名，一般为文件夹名</td>
+</tr>
+<tr>
+<td>resolution</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>description</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>isprivate</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>tags</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>category</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>language</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>mini_thumb_data</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>latitude</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>longitude</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>datetaken</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>mini_thumb_magic</td>
+<td>取小缩略图时生成的一个随机数，见 MediaThumbRequest</td>
+</tr>
+<tr>
+<td>bucket_id</td>
+<td>等于 path.toLowerCase.hashCode()，见 MediaProvider.computeBucketValues()</td>
+</tr>
+<tr>
+<td>bucket_display_name</td>
+<td>直接包含视频的文件夹就是该图片的 bucket，就是文件夹名</td>
+</tr>
+<tr>
+<td>bookmark</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+videothumbnails：视频缩略图&nbsp;&nbsp;
+<table border="1" cellspacing="1" cellpadding="1"><tbody>
+<tr><th>字段</th><th>解析</th></tr>
+</tbody>
+<tbody>
+<tr>
+<td>_id</td>
+<td>主键。缩略图 id</td>
+</tr>
+<tr>
+<td>_data</td>
+<td>缩略图绝对路径</td>
+</tr>
+<tr>
+<td>video_id</td>
+<td>缩略图所对应视频的 id，依赖于 video 表 _id 字段</td>
+</tr>
+<tr>
+<td>kind</td>
+<td>缩略图类型，1 是大图，视频只能取类型 1</td>
+</tr>
+<tr>
+<td>width</td>
+<td>缩略图宽度</td>
+</tr>
+<tr>
+<td>height</td>
+<td>缩略图高度</td>
+</tr>
+</tbody>
+</table>
+<h2>音频数据库</h2>
+<p>音频数据库是最复杂的，由 10 个表组成。物理数据模型如下所示：</p>
+<p><a href="http://www.otechu.me/wp-content/uploads/2011/09/audio.jpg" target="_blank"><img style="cursor: pointer;" title="audio" src="http://www.otechu.me/wp-content/uploads/2011/09/audio.jpg" alt=""></a></p>
+album_art：专辑封面&nbsp;&nbsp;
+<table border="1" cellspacing="1" cellpadding="1"><tbody>
+<tr><th>字段</th><th>解析</th></tr>
+</tbody>
+<tbody>
+<tr>
+<td>album_id</td>
+<td>主键。专辑 id</td>
+</tr>
+<tr>
+<td>_data</td>
+<td>专辑封面缓存的路径</td>
+</tr>
+</tbody>
+</table>
+albums：专辑信息&nbsp;&nbsp;
+<table border="1" cellspacing="1" cellpadding="1"><tbody>
+<tr><th>字段</th><th>解析</th></tr>
+</tbody>
+<tbody>
+<tr>
+<td>album_id</td>
+<td>主键。专辑 id</td>
+</tr>
+<tr>
+<td>album_key</td>
+<td>全大写字母，用于字母索引</td>
+</tr>
+<tr>
+<td>album</td>
+<td>专辑名</td>
+</tr>
+</tbody>
+</table>
+android_metadata：当前字符编码&nbsp;&nbsp;
+<table border="1" cellspacing="1" cellpadding="1"><tbody>
+<tr><th>字段</th><th>解析</th></tr>
+</tbody>
+<tbody>
+<tr>
+<td>locale</td>
+<td>默认字符编码，例如 zh_CN</td>
+</tr>
+</tbody>
+</table>
+artists：艺术家&nbsp;&nbsp;
+<table border="1" cellspacing="1" cellpadding="1"><tbody>
+<tr><th>字段</th><th>解析</th></tr>
+</tbody>
+<tbody>
+<tr>
+<td>artist_id</td>
+<td>主键。艺术家 id</td>
+</tr>
+<tr>
+<td>artist_key</td>
+<td>全大写字母，用于字母索引</td>
+</tr>
+<tr>
+<td>artist</td>
+<td>艺术家</td>
+</tr>
+</tbody>
+</table>
+audio_genres：流派&nbsp;&nbsp;
+<table border="1" cellspacing="1" cellpadding="1"><tbody>
+<tr><th>字段</th><th>解析</th></tr>
+</tbody>
+<tbody>
+<tr>
+<td>_id</td>
+<td>主键。流派 id</td>
+</tr>
+<tr>
+<td>name</td>
+<td>流派名称</td>
+</tr>
+</tbody>
+</table>
+audio_genres_map：音频流派映射&nbsp;&nbsp;
+<table border="1" cellspacing="1" cellpadding="1"><tbody>
+<tr><th>字段</th><th>解析</th></tr>
+</tbody>
+<tbody>
+<tr>
+<td>_id</td>
+<td>主键。映射 id</td>
+</tr>
+<tr>
+<td>audio_id</td>
+<td>音频 id</td>
+</tr>
+<tr>
+<td>genre_id</td>
+<td>流派 id</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong>: 为何要建立映射表：为了消除数据冗余。假如有大量音频属于同一流派，如果没有映射表则需要每个音频都需要记录同样的流派数据，有了映射表之后则只有一条记录就够了。这符合数据库设计的<a href="http://en.wikipedia.org/wiki/Third_normal_form" rel="nofollow" target="_blank">第三范式（the 3rd normal form）</a></p>
+audio_meta：音频信息&nbsp;&nbsp;
+<table border="1" cellspacing="1" cellpadding="1"><tbody>
+<tr><th>字段</th><th>解析</th></tr>
+</tbody>
+<tbody>
+<tr>
+<td>_id</td>
+<td>主键。音频 id</td>
+</tr>
+<tr>
+<td>_data</td>
+<td>文件绝对路径</td>
+</tr>
+<tr>
+<td>_display_name</td>
+<td>文件名</td>
+</tr>
+<tr>
+<td>_size</td>
+<td>文件大小，单位 byte</td>
+</tr>
+<tr>
+<td>mime_type</td>
+<td>类似于 audio/mpeg 的 MIME 类型</td>
+</tr>
+<tr>
+<td>date_added</td>
+<td>添加到数据库的时间，单位秒</td>
+</tr>
+<tr>
+<td>date_modified</td>
+<td>文件最后修改时间，单位秒</td>
+</tr>
+<tr>
+<td>title</td>
+<td>来自 ID3 信息的标题，无则为不带扩展名的文件名</td>
+</tr>
+<tr>
+<td>title_key</td>
+<td>全大写字母的标题</td>
+</tr>
+<tr>
+<td>duration</td>
+<td>时长</td>
+</tr>
+<tr>
+<td>artist_id</td>
+<td>艺术家 id</td>
+</tr>
+<tr>
+<td>composer</td>
+<td>来自 ID3 信息，作曲家</td>
+</tr>
+<tr>
+<td>album_id</td>
+<td>专辑 id</td>
+</tr>
+<tr>
+<td>track</td>
+<td>来自 ID3 信息，音轨</td>
+</tr>
+<tr>
+<td>year</td>
+<td>来自 ID3 信息，年代</td>
+</tr>
+<tr>
+<td>is_ringtone</td>
+<td>是否铃声，0 或 1</td>
+</tr>
+<tr>
+<td>is_music</td>
+<td>是否音乐，1 才会在音乐播放器显示</td>
+</tr>
+<tr>
+<td>is_alarm</td>
+<td>是否闹钟铃声</td>
+</tr>
+<tr>
+<td>is_notification</td>
+<td>是否通知铃声</td>
+</tr>
+<tr>
+<td>is_podcast</td>
+<td>是否 podcast</td>
+</tr>
+<tr>
+<td>bookmark</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+audio_playlists：播放列表&nbsp;&nbsp;
+<table border="1" cellspacing="1" cellpadding="1"><tbody>
+<tr><th>字段</th><th>解析</th></tr>
+</tbody>
+<tbody>
+<tr>
+<td>_id</td>
+<td>主键。播放列表 id</td>
+</tr>
+<tr>
+<td>_data</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>name</td>
+<td>播放列表名</td>
+</tr>
+<tr>
+<td>date_added</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>date_modified</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+audio_playlists_map：音频播放列表映射&nbsp;&nbsp;
+<table border="1" cellspacing="1" cellpadding="1"><tbody>
+<tr><th>字段</th><th>解析</th></tr>
+</tbody>
+<tbody>
+<tr>
+<td>_id</td>
+<td>主键。映射 id</td>
+</tr>
+<tr>
+<td>audio_id</td>
+<td>音频 id</td>
+</tr>
+<tr>
+<td>playlist_id</td>
+<td>播放列表 id</td>
+</tr>
+<tr>
+<td>play_order</td>
+<td>播放顺序</td>
+</tr>
+</tbody>
+</table>
+<h2>索引</h2>
+<p>在 Android 数据库当中基本上使用自增 id 值作为主键，并建立了索引。索引可以<strong>加快数据查找速度</strong>，但由于需要维护索引所以插入/删除等写入操作速度会变慢。索引如下：</p>
+<div class="syntaxhighlighter sql">
+<div class="bar ">
+<div class="toolbar">
+<div class="lines">
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>CREATE</code> <code>INDEX</code> <code>album_id_idx </code><code>on</code> <code>audio_meta(album_id); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>2</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>album_idx </code><code>on</code> <code>albums(album); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>3</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>albumkey_index </code><code>on</code> <code>albums(album_key); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>4</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>artist_id_idx </code><code>on</code> <code>audio_meta(artist_id); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>5</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>artist_idx </code><code>on</code> <code>artists(artist); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>6</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>artistkey_index </code><code>on</code> <code>artists(artist_key); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>7</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>image_bucket_index </code><code>ON</code> <code>images(bucket_id, datetaken); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>8</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>image_id_index </code><code>on</code> <code>thumbnails(image_id); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>9</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>sort_index </code><code>on</code> <code>images(datetaken </code><code>ASC</code><code>, _id </code><code>ASC</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>10</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>title_idx </code><code>on</code> <code>audio_meta(title); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>11</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>titlekey_index </code><code>on</code> <code>audio_meta(title_key); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>12</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>video_bucket_index </code><code>ON</code> <code>video(bucket_id, datetaken); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>13</code></td>
+<td>
+<p><code>CREATE</code> <code>INDEX</code> <code>video_id_index </code><code>on</code> <code>videothumbnails(video_id)</code><span style="font-family: monospace;">;</span></p>
+<p>&nbsp;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="lines">
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>album_id_idx </code><code>on</code> <code>audio_meta(album_id); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>2</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>album_idx </code><code>on</code> <code>albums(album); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>3</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>albumkey_index </code><code>on</code> <code>albums(album_key); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>4</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>artist_id_idx </code><code>on</code> <code>audio_meta(artist_id); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>5</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>artist_idx </code><code>on</code> <code>artists(artist); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>6</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>artistkey_index </code><code>on</code> <code>artists(artist_key); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>7</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>image_bucket_index </code><code>ON</code> <code>images(bucket_id, datetaken); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>8</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>image_id_index </code><code>on</code> <code>thumbnails(image_id); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>9</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>sort_index </code><code>on</code> <code>images(datetaken </code><code>ASC</code><code>, _id </code><code>ASC</code><code>); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>10</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>title_idx </code><code>on</code> <code>audio_meta(title); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>11</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>titlekey_index </code><code>on</code> <code>audio_meta(title_key); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>12</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>video_bucket_index </code><code>ON</code> <code>video(bucket_id, datetaken); </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>13</code></td>
+<td><code>CREATE</code> <code>INDEX</code> <code>video_id_index </code><code>on</code> <code>videothumbnails(video_id);</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>由于比较简单就不解释了，要深入了解索引可以参考这个关于 SQL Server 的分析<a href="http://www.cnblogs.com/leoo2sk/archive/2011/07/10/mysql-index.html" rel="nofollow" target="_blank">MySQL索引背后的数据结构及算法原理</a>，原理应该是差不多的。</p>
+<h2>视图</h2>
+<p><a href="http://www.w3school.com.cn/sql/sql_view.asp" rel="nofollow" target="_blank">视图</a>类似于表，但并非独立存在，是从其他表里面查询数据得到的。使用视图可以加快数据库查询速度，不用每次都执行复杂的 SQL 语句查询。图如下所示：</p>
+<p><a href="http://www.otechu.me/wp-content/uploads/2011/09/views.jpg" target="_blank"><img style="cursor: pointer;" title="views" src="http://www.otechu.me/wp-content/uploads/2011/09/views.jpg" alt=""></a></p>
+<p><strong>Note</strong>: 如何看视图：图下面的部分是数据来源的表，中间是从表中选取的字段，但类似于 COUNT 等 SQL 查询操作无法在图上体现，最好还是看实际 SQL 语句。</p>
+<p><strong>Note</strong>: SQLite 当中视图都是只读的，也就是说不能对视图进行插入、更新、删除等操作。但是可以在视图建立<a href="http://www.sqlite.org/lang_createtrigger.html#instead_of_trigger" rel="nofollow" target="_blank"> INSTEAD OF 触发器</a>来达到同样的目的，多媒体数据库当中的 audio_delete 触发器就是如此。</p>
+<h2>触发器</h2>
+<p>触发器是为了维护数据库删除操作而建立的，因为所删除的表可能与另外的表有关系，需要同时删除另外一个表的字段。可以看以下一个例子：</p>
+<div class="syntaxhighlighter sql">
+<div class="bar ">
+<div class="toolbar">
+<div class="lines">
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>audio_meta_cleanup </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>2</code></td>
+<td><code>DELETE</code> <code>ON</code> <code>audio_meta </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>3</code></td>
+<td><code>BEGIN</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>4</code></td>
+<td><code>&nbsp;&nbsp;&nbsp; </code><code>DELETE</code> <code>FROM</code> <code>audio_genres_map </code><code>WHERE</code> <code>audio_id = old._id; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>5</code></td>
+<td><code>&nbsp;&nbsp;&nbsp; </code><code>DELETE</code> <code>FROM</code> <code>audio_playlists_map </code><code>WHERE</code> <code>audio_id = old._id; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>6</code></td>
+<td><code>END</code><code>;</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="lines">
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>1</code></td>
+<td><code>CREATE</code> <code>TRIGGER</code> <code>audio_meta_cleanup </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>2</code></td>
+<td><code>DELETE</code> <code>ON</code> <code>audio_meta </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>3</code></td>
+<td><code>BEGIN</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>4</code></td>
+<td><code>&nbsp;&nbsp;&nbsp; </code><code>DELETE</code> <code>FROM</code> <code>audio_genres_map </code><code>WHERE</code> <code>audio_id = old._id; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt1">
+<table>
+<tbody>
+<tr>
+<td><code>5</code></td>
+<td><code>&nbsp;&nbsp;&nbsp; </code><code>DELETE</code> <code>FROM</code> <code>audio_playlists_map </code><code>WHERE</code> <code>audio_id = old._id; </code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="line alt2">
+<table>
+<tbody>
+<tr>
+<td><code>6</code></td>
+<td><code>END</code><code>;</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>这是关于 audio_meta 表的触发器，意思是当删除此表上的记录时，同时删除 audio_genres_map 表上 audio_id 与此表 id 相同的记录，删除 audio_playlists_map 表上 audio_id 与此表 id 相同的记录。这样当删除 audio_meta 表的记录时，另外两个表的相应记录也会自动删除，不会由于漏删除而残留多余数据。</p>
+<h1>3. 如何维护数据库</h1>
+<h2>插入</h2>
+<p>插入、更新主要由 MediaScanner 进行，当删除/移动媒体文件时 MediaScanner 会扫描磁盘并更新数据库。数据插入主要在 endFile() 方法中进行，例如插入音频记录时相关的表都会插入相应的记录。而图片、视频缩略图，专辑封面这几个则是第一次取图片的时候才会生成缩略图保存到磁盘，并把记录插入到数据库中。</p>
+<h2>删除</h2>
+<p>删除操作主要由触发器维护。例如当一个应用删除图片时，一般只会删除图片数据库，所以必须要有触发器同时删除缩略图数据库。</p></div><div id="MySignature" style="display: block;">    <p style="background:rgb(230,250,230); padding:10px 10px 10px 10px; border:1px dashed rgb(224,224,224); font-family:微软雅黑; font-size:13px;">
+        作者：<a href="http://www.cnblogs.com/linlf03/" target="_blank">Work Hard Work Smart</a><br>
+        出处：<a href="http://www.cnblogs.com/linlf03/" target="_blank">http://www.cnblogs.com/linlf03/</a><br>
+        欢迎任何形式的转载，未经作者同意，请保留此段声明！
+        </p></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/linlf03/category/436145.html">S.Android</a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+绿色通道：
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(3477077,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://space.cnblogs.com/msg/send/work+hard+work+smart" target="_blank">与我联系</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/icon_weibo_24.png" alt=""></a>
+</div>
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/linlf03/" target="_blank"><img src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/u158914.jpg" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/linlf03/">work hard work smart</a><br>
+<a href="http://home.cnblogs.com/u/linlf03/followees">关注 - 21</a><br>
+<a href="http://home.cnblogs.com/u/linlf03/followers">粉丝 - 78</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+    <a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+    <div class="diggit" onclick="votePost(3477077,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+	<div class="buryit" onclick="votePost(3477077,&#39;Bury&#39;)"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/linlf03/p/3453465.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/linlf03/p/3453465.html" title="发布于2013-12-02 10:22">Android MVC模式</a><br><a href="http://www.cnblogs.com/linlf03/p/3480894.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/linlf03/p/3480894.html" title="发布于2013-12-18 19:02">Android.mk文件语法规范 原文</a><br></div>
+</div>
+
+</div>
+	</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" id="lnk_RefreshComments" onclick="return RefreshCommentList();">刷新评论</a><a href="http://www.cnblogs.com/linlf03/p/3477077.html#" onclick="return RefreshPage();">刷新页面</a><a href="http://www.cnblogs.com/linlf03/p/3477077.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="site_nav_under"><a href="http://www.imooc.com/view/192?from=cnblogs" target="_blank"><b>【免费课程】CSS深入理解之absolute</b></a><br><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】50万行VC++源码: 大型组态工控、电力仿真CAD与GIS源码库</a><br><a href="http://www.rongcloud.cn/promotion" target="_blank">融云，免费为你的App加入IM功能——让你的App“聊”起来！！</a><br><a href="http://amazeui.org/" target="_blank">【推荐】最懂中文的 H5 开源前端框架</a><br><a href="http://www.cnblogs.com/cmt/p/4168231.html" target="_blank">【活动】加班一整年了，程序员们，你们还好吗？</a></div>
+<div id="opt_under_post"></div>
+<script type="text/javascript">
+    var enableGoogleAd = canShowAdsense(); var googletag = googletag || {}; googletag.cmd = googletag.cmd || [];
+    fixPostBodyFormat();
+</script>
+<div id="ad_under_post_holder">
+<script type="text/javascript">
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+    (function () {
+        if (enableGoogleAd) {
+            var gads = document.createElement('script');
+            gads.async = true;
+            gads.type = 'text/javascript';
+            var useSSL = 'https:' == document.location.protocol;
+            gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
+            var node = document.getElementsByTagName('script')[0];
+            node.parentNode.insertBefore(gads, node);
+        }
+    })();
+</script>
+<script type="text/javascript">
+    try {
+        if (enableGoogleAd) {
+            googletag.cmd.push(function () {
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C1_sitehome', [300, 250], 'div-gpt-ad-1346480159711-0').addService(googletag.pubads());
+                googletag.defineSlot('/1090369/cnblogs_blogpost_C2', [468, 60], 'div-gpt-ad-1410860226396-0').addService(googletag.pubads());
+                googletag.pubads().enableSingleRequest();
+                googletag.enableServices();
+            });
+        };
+    } catch (e) { }
+</script>
+<div id="google_ad_c1" class="c_ad_block">
+    <div id="div-gpt-ad-1346480159711-0" style="width:300px; height:250px;">
+    <script type="text/javascript">
+        try {
+            if (enableGoogleAd) {
+                googletag.cmd.push(function () { googletag.display('div-gpt-ad-1346480159711-0'); });            
+            } else {
+                $('#div-gpt-ad-1346480159711-0').hide();
+            }
+    } catch (e) { }
+    </script>
+    <div id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0" width="300" height="250" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" src="javascript:"<html><body style='background:transparent'></body></html>"" style="border: 0px; vertical-align: bottom;"></iframe></div><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" name="google_ads_iframe_/1090369/cnblogs_blogpost_C1_sitehome_0__hidden__" width="0" height="0" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" src="javascript:"<html><body style='background:transparent'></body></html>"" style="border: 0px; vertical-align: bottom; visibility: hidden; display: none;"></iframe></div>
+</div>
+</div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="http://news.cnblogs.com/n/513154/" target="_blank">马云和马化腾的2014：不在跨界里重生，就在逆袭中死亡</a><br> ·  <a href="http://news.cnblogs.com/n/513153/" target="_blank">创业者如何能避免被老东家“秋后算账”？</a><br> ·  <a href="http://news.cnblogs.com/n/513152/" target="_blank">80%的人有智能手机 但只有9%的人有智能手表</a><br> ·  <a href="http://news.cnblogs.com/n/513151/" target="_blank">铁杵磨成针 艺术家用A4纸折出一座城市</a><br> ·  <a href="http://news.cnblogs.com/n/513150/" target="_blank">用307英寸的大画面玩游戏 这叫一个酸爽！</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="google_ad_c2" class="c_ad_block">
+<div id="div-gpt-ad-1410860226396-0" style="width:468px; height:60px;">
+<script type="text/javascript">
+try {
+    if (enableGoogleAd) {
+        googletag.cmd.push(function () { googletag.display('div-gpt-ad-1410860226396-0'); });
+    } else {
+        $('#div-gpt-ad-1346480159711-0').hide();
+    }
+} catch (e) { }
+</script>
+<div id="google_ads_iframe_/1090369/cnblogs_blogpost_C2_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/1090369/cnblogs_blogpost_C2_0" name="google_ads_iframe_/1090369/cnblogs_blogpost_C2_0" width="468" height="60" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" src="javascript:"<html><body style='background:transparent'></body></html>"" style="border: 0px; vertical-align: bottom;"></iframe></div></div>
+</div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/511530/" target="_blank">小团队的技术管理</a><br> ·  <a href="http://kb.cnblogs.com/page/512849/" target="_blank">高效编程之欲擒故纵</a><br> ·  <a href="http://kb.cnblogs.com/page/512517/" target="_blank">互联网组织的未来：剖析GitHub员工的任性之源</a><br> ·  <a href="http://kb.cnblogs.com/page/512759/" target="_blank">内存数据库中的索引技术</a><br> ·  <a href="http://kb.cnblogs.com/page/512454/" target="_blank">如何实现一个malloc</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"><b>历史上的今天:</b><br>2012-12-16 <a href="http://www.cnblogs.com/linlf03/archive/2012/12/16/2820677.html">Java 使用execute方法执行Sql语句</a><br>2012-12-16 <a href="http://www.cnblogs.com/linlf03/archive/2012/12/16/2820636.html">Java 使用executeUpdate向数据库中创建表格</a><br>2012-12-16 <a href="http://www.cnblogs.com/linlf03/archive/2012/12/16/2820574.html">Eclipse 连接MySql数据库总结</a><br>2011-12-16 <a href="http://www.cnblogs.com/linlf03/archive/2011/12/16/2290397.html">html5 图片旋转</a><br></div>
+<script type="text/javascript">
+$(function () {
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 200);
+});
+</script><iframe src="./Android MediaProvider数据库模式 - work hard work smart - 博客园_files/container.htm" style="visibility: hidden; display: none;"></iframe>
+</div>
+
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" class="FooterCell">
+			
+<p id="footer">
+	Powered by: 
+	<br>
+	
+	<a id="Footer1_Hyperlink3" name="Hyperlink1" href="http://www.cnblogs.com/" style="font-family:Verdana;font-size:12px;">博客园</a>
+	<br>
+	Copyright © work hard work smart
+</p>
+
+		</td>
+	</tr>
+</tbody></table>
+
+
+
+<iframe id="google_osd_static_frame_3314028463792" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe></body></html>

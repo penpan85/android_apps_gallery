@@ -82,7 +82,8 @@ public class AlbumSetDataLoader {
     private final MySourceListener mSourceListener = new MySourceListener();
 
     public AlbumSetDataLoader(AbstractGalleryActivity activity, MediaSet albumSet, int cacheSize) {
-        mSource = Utils.checkNotNull(albumSet);
+        //默认会得到一个ComboAlbumSet
+    	mSource = Utils.checkNotNull(albumSet);
         mCoverItem = new MediaItem[cacheSize];
         mData = new MediaSet[cacheSize];
         mTotalCount = new int[cacheSize];
@@ -343,7 +344,7 @@ public class AlbumSetDataLoader {
     
     // reloadtask contains two callable object 
     private class ReloadTask extends Thread {
-    	//用了volatile,内存不会因为线程而保留一份拷贝
+    	//用了volatile,能保证线程修改的值能被立即更新到主存里,而其他线程如果此时从从主内存中获取到的值是最新的,即只能保证变量的可见性,并不能保证原子性
         private volatile boolean mActive = true;
         private volatile boolean mDirty = true;
         private volatile boolean mIsLoading = false;

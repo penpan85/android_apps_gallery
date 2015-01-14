@@ -115,6 +115,7 @@ public class DataManager implements StitchingChangeListener {
     private GalleryApp mApplication;
     private int mActiveCount = 0;
 
+    //缓存所有的内容观察者对象
     private HashMap<Uri, NotifyBroker> mNotifierMap =
             new HashMap<Uri, NotifyBroker>();
 
@@ -178,11 +179,21 @@ public class DataManager implements StitchingChangeListener {
         return path.getObject();
     }
 
+    /**
+     * @param path
+     * @return
+     * 根据path得到相应的MediaObject对象
+     * /combo/test/{/local/all,/picasa/all}对应的Prefix是"combo"
+     * dataManager通过dataSource管理指定的mediaObject
+     */
     public MediaObject getMediaObject(Path path) {
         synchronized (LOCK) {
             MediaObject obj = path.getObject();
             if (obj != null) return obj;
-
+            // 先得到mediaObject对应的数据源
+            // 每种source其实都对应一种prefix,localSource对应"local",
+            // comboSource对应"combo"
+            // 并且各类source下的mediaItem对应的path第一个segment必然是prefix
             MediaSource source = mSourceMap.get(path.getPrefix());
             if (source == null) {
                 Log.w(TAG, "cannot find media source for path: " + path);
@@ -190,6 +201,7 @@ public class DataManager implements StitchingChangeListener {
             }
 
             try {
+            	// 默认情况下
                 MediaObject object = source.createMediaObject(path);
                 if (object == null) {
                     Log.w(TAG, "cannot create media object: " + path);
@@ -214,7 +226,13 @@ public class DataManager implements StitchingChangeListener {
         return (MediaSet) getMediaObject(s);
     }
 
+    /**
+     * @param segment
+     * @return 数据源uri某个segment对应的mediaSet[]
+     * 默认传入值为{set1, set2, ...}，得到
+     */
     public MediaSet[] getMediaSetsFromString(String segment) {
+    	//传入参数{set1, set2, ...}，转换为一个数组，每个元素对应"set1","set2"
         String[] seq = Path.splitSequence(segment);
         int n = seq.length;
         MediaSet[] sets = new MediaSet[n];
@@ -312,8 +330,10 @@ public class DataManager implements StitchingChangeListener {
         }
         return sum;
     }
-
+    
+    //倘若uri对应的数据内容发生了变化，那么会先通知broker,broker再通知notifier
     public void registerChangeNotifier(Uri uri, ChangeNotifier notifier) {
+    	//直接的内容观察者
         NotifyBroker broker = null;
         synchronized (mNotifierMap) {
             broker = mNotifierMap.get(uri);

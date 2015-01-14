@@ -39,6 +39,12 @@ import java.util.ArrayList;
 
 // LocalAlbumSet lists all media items in one bucket on local storage.
 // The media items need to be all images or all videos, but not both.
+
+/**
+ * @author pengpan
+ * 本地相册对象，用来存放本地存储卡某个相册下的所有medisItem
+ * 
+ */
 public class LocalAlbum extends MediaSet {
     private static final String TAG = "LocalAlbum";
     private static final String[] COUNT_PROJECTION = { "count(*)" };
@@ -58,6 +64,13 @@ public class LocalAlbum extends MediaSet {
     private final Path mItemPath;
     private int mCachedCount = INVALID_COUNT;
 
+    /**
+     * @param path 本对象对应的path,例如/local/all/fdsfdsfds
+     * @param application
+     * @param bucketId //对应path最后一个segment,是本相册对应的父目录的hashCode
+     * @param isImage //是否是图片
+     * @param name //相册对应的文件夹的名称
+     */
     public LocalAlbum(Path path, GalleryApp application, int bucketId,
             boolean isImage, String name) {
         super(path, nextVersionNumber());
@@ -68,10 +81,14 @@ public class LocalAlbum extends MediaSet {
         mIsImage = isImage;
 
         if (isImage) {
+        	//选择语句
             mWhereClause = ImageColumns.BUCKET_ID + " = ?";
+            //排序语句
             mOrderClause = ImageColumns.DATE_TAKEN + " DESC, "
                     + ImageColumns._ID + " DESC";
+            //基本uri
             mBaseUri = Images.Media.EXTERNAL_CONTENT_URI;
+            //需要读取的字段
             mProjection = LocalImage.PROJECTION;
             mItemPath = LocalImage.ITEM_PATH;
         } else {

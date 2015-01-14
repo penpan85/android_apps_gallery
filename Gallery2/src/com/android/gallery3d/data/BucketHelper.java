@@ -146,6 +146,7 @@ class BucketHelper {
             JobContext jc, ContentResolver resolver, int type) {
         Uri uri = getFilesContentUri();
 
+        // 得到系统媒体数据库所有媒体文件
         Cursor cursor = resolver.query(uri,
                 PROJECTION_BUCKET, BUCKET_GROUP_BY,
                 null, BUCKET_ORDER_BY);

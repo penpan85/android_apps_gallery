@@ -111,6 +111,7 @@ public final class GalleryActivity extends AbstractGalleryActivity implements On
         PicasaSource.showSignInReminder(this);
         Bundle data = new Bundle();
         //默认显示相册缩略图页面
+        
         data.putString(AlbumSetPage.KEY_MEDIA_PATH,
                 getDataManager().getTopSetPath(DataManager.INCLUDE_ALL));
         //相当于 startActivity

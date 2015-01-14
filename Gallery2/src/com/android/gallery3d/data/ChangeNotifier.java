@@ -41,10 +41,17 @@ public class ChangeNotifier {
     }
 
     // Returns the dirty flag and clear it.
+    // 原始状态,mContentDirty 为true
+    // isDirty()执行一次，mContentDirty为false
+    // onchange一次, mContentDirty为true
+    // isDirty()与onChange()各自连续执行都不能改变mContentDirty的状态
     public boolean isDirty() {
+    	//compareAndSet函数，如果mContentDirty包裹的boolean型变量与expected参数值相同，则置为后面的参数update value,此处为"false"
+    	//更新成功，返回true,否则返回false
         return mContentDirty.compareAndSet(true, false);
     }
 
+    //伪造change
     public void fakeChange() {
         onChange(false);
     }

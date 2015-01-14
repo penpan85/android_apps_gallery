@@ -42,7 +42,7 @@ public abstract class SQLiteContentProvider extends ContentProvider {
 
     private SQLiteOpenHelper mOpenHelper;
     private Set<Uri> mChangedUris;
-
+    //是否是操作一批数据
     private final ThreadLocal<Boolean> mApplyingBatch = new ThreadLocal<Boolean>();
     private static final int SLEEP_AFTER_YIELD_DELAY = 4000;
 
@@ -241,6 +241,11 @@ public abstract class SQLiteContentProvider extends ContentProvider {
         }
     }
 
+    /**
+     * @param callerIsSyncAdapter
+     * @return
+     * 数据库操作结束，通知ui应当发生变化
+     */
     protected Set<Uri> onEndTransaction(boolean callerIsSyncAdapter) {
         Set<Uri> changed;
         synchronized (mChangedUris) {

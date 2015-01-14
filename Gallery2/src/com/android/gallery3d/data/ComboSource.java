@@ -18,6 +18,10 @@ package com.android.gallery3d.data;
 
 import com.android.gallery3d.app.GalleryApp;
 
+/**
+ * @author pengpan
+ * 刻录机数据源
+ */
 class ComboSource extends MediaSource {
     private static final int COMBO_ALBUMSET = 0;
     private static final int COMBO_ALBUM = 1;
@@ -33,6 +37,7 @@ class ComboSource extends MediaSource {
     }
 
     // The only path we accept is "/combo/{set1, set2, ...} and /combo/item/{set1, set2, ...}"
+    // segments[1] 对应的是获取相册mediaSet,segments[2]对应某个相片的mediaSet
     @Override
     public MediaObject createMediaObject(Path path) {
         String[] segments = path.split();

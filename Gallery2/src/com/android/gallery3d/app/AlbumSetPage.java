@@ -485,9 +485,11 @@ public class AlbumSetPage extends ActivityState implements
     }
 
     private void initializeData(Bundle data) {
-    	//得到媒体文件路径
+    	//得到媒体文件路径，默认得到所有媒体类型
+    	//默认值:"/combo/{/local/all,/picasa/all}"
         String mediaPath = data.getString(AlbumSetPage.KEY_MEDIA_PATH);
         //得到路径中所有媒体的集合
+        
         mMediaSet = mActivity.getDataManager().getMediaSet(mediaPath);
         mSelectionManager.setSourceMediaSet(mMediaSet);
         //缩略图集合数据适配器，数据源与page之间的桥梁

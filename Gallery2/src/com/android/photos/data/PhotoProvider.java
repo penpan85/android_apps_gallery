@@ -47,6 +47,19 @@ import java.util.List;
  * values for the metadata must be in the ContentValues, even if they are also
  * in the selection. The selection and selectionArgs are not used when updating
  * metadata. If the metadata values are null, the row will be deleted.
+ * 
+ * 本应用核心的provider,能够给存储在媒体服务上的媒体提供图象和视频文件信息，需要放到媒体服务上的所有媒体将会利用这个
+ * provider进行保存，
+ * Photos.CONTENT_URI:可以查询所有的图像和视频媒体信息
+ * Albums.CONTENT_URI:可以查询所有的相册信息
+ * Metadata.CONTENT_URI:可以基于媒体的id查询关于一张图像或者视频的元数据
+ * ImageCache.THUMBNAIL_CONTENT_URI,
+ * ImageCache.PREVIEW_CONTENT_URI,
+ * ImageCache.ORIGINAL_CONTENT_URI:这几种用来单独地查询缩略图，预览图，或者原始尺寸的图片
+ * 添加或者更新元数据，使用更新函数而不要使用插入函数，所有元数据相关的值都应当保存在contentValues中，即使
+ * 某些字段包含在选择语句里，当metadata发生更新时，选择语句与对应的参数语句不会被使用，如果某个metadata的值是null
+ * 那一整行数据会被删除
+ * 
  */
 public class PhotoProvider extends SQLiteContentProvider {
     @SuppressWarnings("unused")
@@ -54,11 +67,13 @@ public class PhotoProvider extends SQLiteContentProvider {
 
     protected static final String DB_NAME = "photo.db";
     public static final String AUTHORITY = PhotoProviderAuthority.AUTHORITY;
+    //标准的uri构建方式
     static final Uri BASE_CONTENT_URI = new Uri.Builder().scheme("content").authority(AUTHORITY)
             .build();
 
     // Used to allow mocking out the change notification because
     // MockContextResolver disallows system-wide notification.
+    // 仿内容解析者不允许有系统范围的通知行为，这个接口用来模仿监听的目标uri对应的数据发生变化时发出的通知
     public static interface ChangeNotification {
         void notifyChange(Uri uri, boolean syncToNetwork);
     }
@@ -69,14 +84,17 @@ public class PhotoProvider extends SQLiteContentProvider {
     public static interface Accounts extends BaseColumns {
         /**
          * Internal database table used for account information
+         * 保存帐户信息的表名
          */
         public static final String TABLE = "accounts";
         /**
          * Content URI for account information
+         * 对应的uri
          */
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, TABLE);
         /**
          * User name for this account.
+         * 帐户名字
          */
         public static final String ACCOUNT_NAME = "name";
     }
