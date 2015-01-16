@@ -138,7 +138,7 @@ public class LocalAlbumSet extends MediaSet
             ArrayList<MediaSet> albums = new ArrayList<MediaSet>();
             DataManager dataManager = mApplication.getDataManager();
             for (BucketEntry entry : entries) {
-            	// entry.bucketId:相当于相册的父路径
+            	// entry.bucketId:相当于相册的父路径的hashCode
             	// entry.bucketName:相当于相册对应的文件夹名称
             	// 比方当前相册album完整路径 /sdcard/download/album
             	// 那么bucketId即为"/sdcard/download"的hashCode,bucketName为album
@@ -169,9 +169,11 @@ public class LocalAlbumSet extends MediaSet
             if (object != null) return (MediaSet) object;
             switch (type) {
                 case MEDIA_TYPE_IMAGE:
+                	// 默认会得到 path:/local/image/jkjf930,
                     return new LocalAlbum(path, mApplication, id, true, name);
                 case MEDIA_TYPE_VIDEO:
                     return new LocalAlbum(path, mApplication, id, false, name);
+                //默认传入的是/local/all,所以会执行这一句
                 case MEDIA_TYPE_ALL:
                     Comparator<MediaItem> comp = DataManager.sDateTakenComparator;
                     return new LocalMergeAlbum(path, comp, new MediaSet[] {
@@ -191,7 +193,8 @@ public class LocalAlbumSet extends MediaSet
     // synchronized on this function for
     //   1. Prevent calling reload() concurrently.
     //   2. Prevent calling onFutureDone() and reload() concurrently
-    // 页面进入resume后就会调用此reload()方法
+    // 页面进入resume后就会调用此reload()方法，
+    // 第一次reload(),会执行AlbumsLoader加载各个相册的信息
     public synchronized long reload() {
     	//首次进入，isDirty()返回true
         if (mNotifier.isDirty()) {
@@ -200,6 +203,7 @@ public class LocalAlbumSet extends MediaSet
             // 执行完这一步，该相册集所有的LocalAlbum都被加载进了mAlbums
             mLoadTask = mApplication.getThreadPool().submit(new AlbumsLoader(), this);
         }
+        //第一次reload()，不会执行这一段
         if (mLoadBuffer != null) {
             mAlbums = mLoadBuffer;
             mLoadBuffer = null;
@@ -208,6 +212,7 @@ public class LocalAlbumSet extends MediaSet
             }
             mDataVersion = nextVersionNumber();
         }
+        // 第一次执行，mDataVersion会返回1
         return mDataVersion;
     }
 

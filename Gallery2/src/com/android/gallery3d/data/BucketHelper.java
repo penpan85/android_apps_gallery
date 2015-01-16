@@ -198,6 +198,10 @@ class BucketHelper {
         return null;
     }
 
+    /**
+     * @return
+     * 对应访问 media provider的external数据库下的files数据表
+     */
     @TargetApi(ApiHelper.VERSION_CODES.HONEYCOMB)
     private static Uri getFilesContentUri() {
         return Files.getContentUri(EXTERNAL_MEDIA);

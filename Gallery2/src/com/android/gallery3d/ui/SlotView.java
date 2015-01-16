@@ -106,6 +106,10 @@ public class SlotView extends GLView {
         setSlotSpec(spec);
     }
 
+    /**
+     * @param slotDrawer
+     * 由AlbumSetPage的initializeView函数调用
+     */
     public void setSlotRenderer(SlotRenderer slotDrawer) {
         mRenderer = slotDrawer;
         if (mRenderer != null) {
@@ -174,6 +178,10 @@ public class SlotView extends GLView {
         throw new UnsupportedOperationException();
     }
 
+    /* (non-Javadoc)
+     * @see com.android.gallery3d.ui.GLView#onLayout(boolean, int, int, int, int)
+     * GLview系统会在onCreate执行过后，遍历执行各个GLview的onLayout方法
+     */
     @Override
     protected void onLayout(boolean changeSize, int l, int t, int r, int b) {
         if (!changeSize) return;
@@ -181,6 +189,9 @@ public class SlotView extends GLView {
         // Make sure we are still at a resonable scroll position after the size
         // is changed (like orientation change). We choose to keep the center
         // visible slot still visible. This is arbitrary but reasonable.
+        // 确认如果控件大小发生了变化比如屏幕方向发生变化，我们还能够有合理的滚动位置，我们保证控件的中心
+        // 位置仍然可见
+        // 
         int visibleIndex =
                 (mLayout.getVisibleStart() + mLayout.getVisibleEnd()) / 2;
         mLayout.setSize(r - l, b - t);
@@ -444,6 +455,10 @@ public class SlotView extends GLView {
             mSpec = spec;
         }
 
+        /**
+         * @param slotCount
+         * @return 初始化layout各个属性
+         */
         public boolean setSlotCount(int slotCount) {
             if (slotCount == mSlotCount) return false;
             if (mSlotCount != 0) {
@@ -492,6 +507,7 @@ public class SlotView extends GLView {
 
         // Calculate
         // (1) mUnitCount: the number of slots we can fit into one column (or row).
+        // 
         // (2) mContentLength: the width (or height) we need to display all the
         //     columns (rows).
         // (3) padding[]: the vertical and horizontal padding we need in order
@@ -525,6 +541,9 @@ public class SlotView extends GLView {
             padding[1] = Math.max(0, (majorLength - mContentLength) / 2);
         }
 
+        /**
+         * 在onResume()时即可将正确的尺寸信息传入onLayout(),并进一步赋予控件
+         */
         private void initLayoutParameters() {
             // Initialize mSlotWidth and mSlotHeight from mSpec
             if (mSpec.slotWidth != -1) {
@@ -601,6 +620,15 @@ public class SlotView extends GLView {
             updateVisibleSlotRange();
         }
 
+        /**
+         * @param start
+         * @param end
+         *   start-- ***
+         *    		 ***
+         *    		 ***
+         *    		 ***
+         *    		 *** --end
+         */
         private void setVisibleRange(int start, int end) {
             if (start == mVisibleStart && end == mVisibleEnd) return;
             if (start < end) {

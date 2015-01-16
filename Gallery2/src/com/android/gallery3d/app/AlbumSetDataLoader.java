@@ -234,6 +234,10 @@ public class AlbumSetDataLoader {
         }
     }
 
+    /**
+     * @param listener
+     * 对于AlbumSetDataLoader来讲，最直接的监听对象是AlbumSetSlidingWindow
+     */
     public void setModelListener(DataListener listener) {
         mDataListener = listener;
     }
@@ -309,6 +313,7 @@ public class AlbumSetDataLoader {
                 if (mActiveEnd > mSize) mActiveEnd = mSize;
             }
             // Note: info.index could be INDEX_NONE, i.e., -1
+            // 填充指定index位置上对应的mediaSet信息
             if (info.index >= mContentStart && info.index < mContentEnd) {
                 int pos = info.index % mCoverItem.length;
                 mSetVersion[pos] = info.version;
@@ -360,6 +365,7 @@ public class AlbumSetDataLoader {
             Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
             boolean updateComplete = false;
             while (mActive) {
+            	
                 synchronized (this) {
                     if (mActive && !mDirty && updateComplete) {
                         if (!mSource.isLoading()) updateLoading(false);
@@ -368,11 +374,12 @@ public class AlbumSetDataLoader {
                     }
                 }
                 mDirty = false;
-                //置标志位mIsLoading为true，通知ui，绘制loading开始的状态
+                // 置标志位mIsLoading为true，通知ui，绘制loading开始的状态
                 updateLoading(true);
-                
+                // 第一次resume进来后，mDirty为true,所以会执行下面一句
+                // 第一次执行默认会执行到LocalSource的reload();
                 long version = mSource.reload();
-                //得到最新的数据，并包装到updateInfo中
+                // 得到最新的数据，并包装到updateInfo中
                 
                 UpdateInfo info = executeAndWait(new GetUpdateInfo(version));
                 updateComplete = info == null;
@@ -392,10 +399,13 @@ public class AlbumSetDataLoader {
                     }
                 }
                 if (info.index != INDEX_NONE) {
-                	//得到根媒体对象集的指定索引的子集
+                	// 得到根媒体对象集的指定索引的子集，默认情况下会得到"localAlbumSet"和"PicasaAlbumSet"
+                	// 的其中一个
                     info.item = mSource.getSubMediaSet(info.index);
                     if (info.item == null) continue;
+                    // 得到cover对应的mediaItem
                     info.cover = info.item.getCoverMediaItem();
+                    // 得到 mediaItem的总数量
                     info.totalCount = info.item.getTotalMediaItemCount();
                 }
                 

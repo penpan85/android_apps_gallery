@@ -67,17 +67,17 @@ public class LocalAlbum extends MediaSet {
     /**
      * @param path 本对象对应的path,例如/local/all/fdsfdsfds
      * @param application
-     * @param bucketId //对应path最后一个segment,是本相册对应的父目录的hashCode
+     * @param bucketId //是本相册对应的父目录的hashCode,即/local/all的hashCode
      * @param isImage //是否是图片
-     * @param name //相册对应的文件夹的名称
+     * @param name //相册对应的文件夹的名称即fdsfdsfds
      */
     public LocalAlbum(Path path, GalleryApp application, int bucketId,
             boolean isImage, String name) {
         super(path, nextVersionNumber());
         mApplication = application;
         mResolver = application.getContentResolver();
-        mBucketId = bucketId;
-        mName = name;
+        mBucketId = bucketId;//
+        mName = name;//所属文件夹名称
         mIsImage = isImage;
 
         if (isImage) {

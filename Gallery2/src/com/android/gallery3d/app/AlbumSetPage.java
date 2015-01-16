@@ -488,7 +488,7 @@ public class AlbumSetPage extends ActivityState implements
     	//得到媒体文件路径，默认得到所有媒体类型
     	//默认值:"/combo/{/local/all,/picasa/all}"
         String mediaPath = data.getString(AlbumSetPage.KEY_MEDIA_PATH);
-        //得到路径中所有媒体的集合
+        //得到路径中所有媒体的集合, 按默认情况下得到的是ComboAlbumSet
         
         mMediaSet = mActivity.getDataManager().getMediaSet(mediaPath);
         mSelectionManager.setSourceMediaSet(mMediaSet);
@@ -507,12 +507,13 @@ public class AlbumSetPage extends ActivityState implements
         mSelectionManager.setSelectionListener(this);
 
         mConfig = Config.AlbumSetPage.get(mActivity);
-        //2*2组合式的子view
+        // 2*2组合式的子view
         mSlotView = new SlotView(mActivity, mConfig.slotViewSpec);
-        //相册缩略图条目渲染器
+        // 相册缩略图条目渲染器
         mAlbumSetView = new AlbumSetSlotRenderer(
                 mActivity, mSelectionManager, mSlotView, mConfig.labelSpec,
                 mConfig.placeholderColor);
+        // 初始化slotView
         mSlotView.setSlotRenderer(mAlbumSetView);
         mSlotView.setListener(new SlotView.SimpleListener() {
             @Override

@@ -381,6 +381,7 @@ public class AlbumDataLoader {
                     info.size = mSource.getMediaItemCount();
                     info.version = version;
                 }
+                // 开始获取某个相册的详细信息
                 if (info.reloadCount > 0) {
                     info.items = mSource.getMediaItem(info.reloadStart, info.reloadCount);
                 }

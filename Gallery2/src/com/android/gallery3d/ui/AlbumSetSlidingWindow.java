@@ -53,7 +53,8 @@ public class AlbumSetSlidingWindow implements AlbumSetDataLoader.DataListener {
 
     private int mActiveStart = 0;
     private int mActiveEnd = 0;
-
+    // 对于AlbumSetSlidingWindow来说，该listener是AlbumSetSlotRender,AlbumSetSlotRender
+    // 又会把数据变化造成的回调传递给SlotView
     private Listener mListener;
 
     private final AlbumSetEntry mData[];
@@ -96,6 +97,7 @@ public class AlbumSetSlidingWindow implements AlbumSetDataLoader.DataListener {
         source.setModelListener(this);
         mSource = source;
         mData = new AlbumSetEntry[cacheSize];
+        // 相册总共的数量
         mSize = source.size();
         mThreadPool = activity.getThreadPool();
 
@@ -243,11 +245,17 @@ public class AlbumSetSlidingWindow implements AlbumSetDataLoader.DataListener {
                 || entry.sourceType != sourceType;
     }
 
+    /**
+     * @param entry 相册集数据项入口对象
+     * @param slotIndex 条目在gridview中的索引
+     * 更新缓存的entry数据
+     */
     private void updateAlbumSetEntry(AlbumSetEntry entry, int slotIndex) {
         MediaSet album = mSource.getMediaSet(slotIndex);
         MediaItem cover = mSource.getCoverItem(slotIndex);
+        // 某个相册集对象包含媒体文件的数量
         int totalCount = mSource.getTotalCount(slotIndex);
-
+        
         entry.album = album;
         entry.setDataVersion = getDataVersion(album);
         entry.cacheFlag = identifyCacheFlag(album);
@@ -349,6 +357,10 @@ public class AlbumSetSlidingWindow implements AlbumSetDataLoader.DataListener {
         }
     }
 
+    /* (non-Javadoc)
+     * @see com.android.gallery3d.app.AlbumSetDataLoader.DataListener#onSizeChanged(int)
+     * 由AlbumSetLoader进行相册集数据总体更新后，执行回调
+     */
     @Override
     public void onSizeChanged(int size) {
         if (mIsActive && mSize != size) {
@@ -359,6 +371,10 @@ public class AlbumSetSlidingWindow implements AlbumSetDataLoader.DataListener {
         }
     }
 
+    /* (non-Javadoc)
+     * @see com.android.gallery3d.app.AlbumSetDataLoader.DataListener#onContentChanged(int)
+     * 某个相册集的数据项发生了变化，回调给此函数
+     */
     @Override
     public void onContentChanged(int index) {
         if (!mIsActive) {
@@ -522,9 +538,15 @@ public class AlbumSetSlidingWindow implements AlbumSetDataLoader.DataListener {
         }
     }
 
+    /**
+     * @param width
+     * @param height
+     * AlbumSetPage在onCreate()时会通过slotView将宽高传入此函数，进行初始化
+     * 第一次执行时mContentStart = 0? 而且 mContentEnd = 0?
+     */
     public void onSlotSizeChanged(int width, int height) {
         if (mSlotWidth == width) return;
-
+        
         mSlotWidth = width;
         mLoadingLabel = null;
         mLabelMaker.setLabelWidth(mSlotWidth);

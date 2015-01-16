@@ -80,7 +80,7 @@ public class ComboAlbumSet extends MediaSet implements ContentListener {
     }
 
     // 页面默认执行remume，mSets会有"/local/all","/picasa/all"两个mediaSet
-    // 所以会调用两者的reload()方法
+    // 所以会调用两者的reload()方法，默认会执行localAlbumSet和PicasaAlbumSet的reload的方法
     @Override
     public long reload() {
         boolean changed = false;
@@ -97,6 +97,10 @@ public class ComboAlbumSet extends MediaSet implements ContentListener {
         notifyContentChanged();
     }
 
+    /* (non-Javadoc)
+     * @see com.android.gallery3d.data.MediaSet#requestSync(com.android.gallery3d.data.MediaSet.SyncListener)
+     * 请求同步所有的相册数据
+     */
     @Override
     public Future<Integer> requestSync(SyncListener listener) {
         return requestSyncOnMultipleSets(mSets, listener);

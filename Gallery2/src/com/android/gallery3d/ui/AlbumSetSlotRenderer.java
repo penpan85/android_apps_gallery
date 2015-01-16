@@ -30,6 +30,10 @@ import com.android.gallery3d.glrenderer.TiledTexture;
 import com.android.gallery3d.glrenderer.UploadedTexture;
 import com.android.gallery3d.ui.AlbumSetSlidingWindow.AlbumSetEntry;
 
+/**
+ * @author pengpan
+ * 渲染相册缩略图
+ */
 public class AlbumSetSlotRenderer extends AbstractSlotRenderer {
     @SuppressWarnings("unused")
     private static final String TAG = "AlbumSetView";
@@ -99,12 +103,18 @@ public class AlbumSetSlotRenderer extends AbstractSlotRenderer {
         mSlotView.invalidate();
     }
 
+    /**
+     * @param model
+     * AlbumSetPage中的initializeData调用此方法
+     */
     public void setModel(AlbumSetDataLoader model) {
+    	// 如果mDataWindow已经创建过，那么重新创建mDataWindow
         if (mDataWindow != null) {
             mDataWindow.setListener(null);
             mDataWindow = null;
             mSlotView.setSlotCount(0);
         }
+        // 如果界面已经显示过，从某种后台转入前台，那么model里面其实已经有数据了
         if (model != null) {
             mDataWindow = new AlbumSetSlidingWindow(
                     mActivity, model, mLabelSpec, CACHE_SIZE);
@@ -205,13 +215,25 @@ public class AlbumSetSlotRenderer extends AbstractSlotRenderer {
         mInSelectionMode = mSelectionManager.inSelectionMode();
     }
 
+    /**
+     * @author pengpan
+     * 当AlbumSetLoader中加载数据结束后，会先回调到AlbumSetSlidingWindow,再由Album
+     * SetSlidingWindow回调MyCacheListner
+     *
+     */
     private class MyCacheListener implements AlbumSetSlidingWindow.Listener {
 
+        /* (non-Javadoc)
+         * @see com.android.gallery3d.ui.AlbumSetSlidingWindow.Listener#onSizeChanged(int)
+         */
         @Override
         public void onSizeChanged(int size) {
             mSlotView.setSlotCount(size);
         }
 
+        /* (non-Javadoc)
+         * @see com.android.gallery3d.ui.AlbumSetSlidingWindow.Listener#onContentChanged()
+         */
         @Override
         public void onContentChanged() {
             mSlotView.invalidate();
@@ -226,6 +248,16 @@ public class AlbumSetSlotRenderer extends AbstractSlotRenderer {
         mDataWindow.resume();
     }
 
+    /* (non-Javadoc)
+     * @see com.android.gallery3d.ui.SlotView.SlotRenderer#onVisibleRangeChanged(int, int)
+     * AlbumSetPage在onCreate时，
+     *  initializeView会默认回调此函数，将界面的宽高传入AlbumSetSlidingWindow，此时
+     *  mDataWindow还未创建，故不会进一步往下传递
+     *  
+     *  到了执行initializeData,会执行setModel(),对mDataWindow进行初始化
+     *  
+     *  最终由SlotView的setVisibleRange调用此函数
+     */
     @Override
     public void onVisibleRangeChanged(int visibleStart, int visibleEnd) {
         if (mDataWindow != null) {
@@ -233,6 +265,14 @@ public class AlbumSetSlotRenderer extends AbstractSlotRenderer {
         }
     }
 
+    /* (non-Javadoc)
+     * @see com.android.gallery3d.ui.SlotView.SlotRenderer#onSlotSizeChanged(int, int)
+     *  AlbumSetPage在onCreate时
+     *  initializeView会默认回调此函数，将界面的宽高传入AlbumSetSlidingWindow，此时
+     *  mDataWindow还未创建，故不会进一步往下传递
+     *  
+     *  到了执行initializeData,会执行setModel(),对mDataWindow进行初始化
+     */
     @Override
     public void onSlotSizeChanged(int width, int height) {
         if (mDataWindow != null) {

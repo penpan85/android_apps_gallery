@@ -157,6 +157,11 @@ public abstract class MediaObject {
         return ++MediaObject.sVersionSerial;
     }
 
+    /**
+     * @param s
+     * @return
+     * 默认会返回一个MediaObject.MEADIA_TYPE_ALL
+     */
     public static int getTypeFromString(String s) {
         if (MEDIA_TYPE_ALL_STRING.equals(s)) return MediaObject.MEDIA_TYPE_ALL;
         if (MEDIA_TYPE_IMAGE_STRING.equals(s)) return MediaObject.MEDIA_TYPE_IMAGE;
