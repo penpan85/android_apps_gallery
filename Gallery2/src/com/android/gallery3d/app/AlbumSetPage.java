@@ -76,20 +76,15 @@ public class AlbumSetPage extends ActivityState implements
         EyePosition.EyePositionListener, MediaSet.SyncListener {
     @SuppressWarnings("unused")
     private static final String TAG = "AlbumSetPage";
-
     private static final int MSG_PICK_ALBUM = 1;
-
     public static final String KEY_MEDIA_PATH = "media-path";
     public static final String KEY_SET_TITLE = "set-title";
     public static final String KEY_SET_SUBTITLE = "set-subtitle";
     public static final String KEY_SELECTED_CLUSTER_TYPE = "selected-cluster";
-
     private static final int DATA_CACHE_SIZE = 256;
     private static final int REQUEST_DO_ANIMATION = 1;
-
     private static final int BIT_LOADING_RELOAD = 1;
     private static final int BIT_LOADING_SYNC = 2;
-
     private boolean mIsActive = false;
     private SlotView mSlotView;
     private AlbumSetSlotRenderer mAlbumSetView;
@@ -140,7 +135,6 @@ public class AlbumSetPage extends ActivityState implements
         protected void onLayout(
                 boolean changed, int left, int top, int right, int bottom) {
             mEyePosition.resetPosition();
-
             int slotViewTop = mActionBar.getHeight() + mConfig.paddingTop;
             int slotViewBottom = bottom - top - mConfig.paddingBottom;
             int slotViewRight = right - left - mConfig.paddingRight;

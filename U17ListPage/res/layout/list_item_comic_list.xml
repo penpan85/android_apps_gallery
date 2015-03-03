@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/list_item_commen_padding_large" >
+            <com.u17.phone.ui.widget.BorderImageView
+                android:id="@+id/id_comic_iv_cover"
+                android:layout_width="@dimen/list_item_image_default_width_change"
+                android:layout_height="@dimen/list_item_image_default_height_change"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="@dimen/list_item_commen_padding_large" 
+                android:background="@color/default_iv_bg_color"
+                android:scaleType="centerInside"
+                android:src="@drawable/bg_default_cover" >
+            </com.u17.phone.ui.widget.BorderImageView>
+
+        <LinearLayout
+            android:id="@+id/id_ll_middle_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_item_image_default_height_change"
+            android:layout_marginLeft="@dimen/list_item_commen_padding"
+            android:layout_marginRight="@dimen/list_item_commen_padding"
+            android:layout_marginTop="@dimen/list_item_commen_padding_large" 
+            android:layout_toRightOf="@+id/id_comic_iv_cover"
+            android:gravity="center_vertical|left"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/id_comic_tv_title"
+                style="@style/U17_7TH_FONT"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="十万个冷笑话 " />
+
+            <TextView
+                android:id="@+id/id_comic_tv_line2"
+                style="@style/U17_16TH_FONT"
+                android:layout_marginTop="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" 
+                android:singleLine="true"
+                android:text="更新"
+                android:ellipsize="end"
+                android:gravity="center_vertical"/>
+            
+            <TextView
+                android:id="@+id/id_comic_tv_line3"
+                style="@style/U17_16TH_FONT"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:text="搞笑   动作 " />
+
+            <TextView
+                android:id="@+id/id_comic_tv_line4"
+                style="@style/U17_16TH_FONT"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="156988  个吐槽" />
+
+            <!-- 签约部分开始 -->
+
+        </LinearLayout>
+<!--     </LinearLayout> -->
+
+    <TextView
+        android:id="@+id/id_comic_tv_level"
+        android:layout_width="27dp"
+        android:layout_height="22dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/icon_list_crown_cropper" />
+
+    <TextView
+        android:id="@+id/id_comic_tv_dujia"
+        android:layout_width="50dp"
+        android:layout_height="37dp"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/icon_list_dujia" />
+
+    <TextView
+        android:id="@+id/id_comic_tv_qianyue"
+        android:layout_width="50dp"
+        android:layout_height="37dp"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/icon_list_qianyue" />
+
+    <TextView
+        android:id="@+id/id_comic_tv_right_number"
+        android:layout_width="62dp"
+        android:layout_height="85dp"
+        android:layout_alignBottom="@+id/id_ll_middle_container"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/id_comic_tv_dujia"
+        android:gravity="center_horizontal|bottom"
+        android:paddingBottom="5dp"
+        android:paddingLeft="20dp"
+        android:text="1"
+        android:textColor="#e2e2e2"
+        android:textSize="30sp"
+        android:visibility="gone" />
+
+</RelativeLayout>

@@ -248,7 +248,7 @@ public class AlbumSetSlidingWindow implements AlbumSetDataLoader.DataListener {
     /**
      * @param entry 相册集数据项入口对象
      * @param slotIndex 条目在gridview中的索引
-     * 更新缓存的entry数据
+     * 更新缓存的entry数据,准备好标签加载器和icon加载器
      */
     private void updateAlbumSetEntry(AlbumSetEntry entry, int slotIndex) {
         MediaSet album = mSource.getMediaSet(slotIndex);
@@ -343,12 +343,17 @@ public class AlbumSetSlidingWindow implements AlbumSetDataLoader.DataListener {
         }
     }
 
+    /**
+     * 刷新所有的bitmap加载请求
+     */
     private void updateAllImageRequests() {
         mActiveRequestCount = 0;
         for (int i = mActiveStart, n = mActiveEnd; i < n; ++i) {
             AlbumSetEntry entry = mData[i % mData.length];
-            if (startLoadBitmap(entry.coverLoader)) ++mActiveRequestCount;
-            if (startLoadBitmap(entry.labelLoader)) ++mActiveRequestCount;
+            if (startLoadBitmap(entry.coverLoader)) 
+            	++mActiveRequestCount;
+            if (startLoadBitmap(entry.labelLoader)) 
+            	++mActiveRequestCount;
         }
         if (mActiveRequestCount == 0) {
             requestNonactiveImages();
@@ -373,7 +378,8 @@ public class AlbumSetSlidingWindow implements AlbumSetDataLoader.DataListener {
 
     /* (non-Javadoc)
      * @see com.android.gallery3d.app.AlbumSetDataLoader.DataListener#onContentChanged(int)
-     * 某个相册集的数据项发生了变化，回调给此函数
+     * AlbumSetDataLoader加载好了某个索引对应的AlbumSet,
+     * 回调给此函数
      */
     @Override
     public void onContentChanged(int index) {
@@ -389,7 +395,7 @@ public class AlbumSetSlidingWindow implements AlbumSetDataLoader.DataListener {
                     index, mContentStart, mContentEnd) );
             return;
         }
-
+        
         AlbumSetEntry entry = mData[index % mData.length];
         updateAlbumSetEntry(entry, index);
         updateAllImageRequests();

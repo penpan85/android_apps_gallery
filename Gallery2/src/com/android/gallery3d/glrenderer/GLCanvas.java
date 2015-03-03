@@ -167,6 +167,7 @@ public interface GLCanvas {
 
     /**
      * Calls glTexSubImage2D to upload a bitmap to the texture.
+     * 上载一个图片到材质中
      *
      * @param texture The target texture to write to.
      * @param xOffset Specifies a texel offset in the x direction within the

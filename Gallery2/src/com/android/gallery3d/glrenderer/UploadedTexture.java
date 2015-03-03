@@ -182,8 +182,10 @@ public abstract class UploadedTexture extends BasicTexture {
     /**
      * Updates the content on GPU's memory.
      * @param canvas
+     * 将材质内容数据上载到gpu中
      */
     public void updateContent(GLCanvas canvas) {
+    	//已经上载，则绘制到canvas上
         if (!isLoaded()) {
             if (mThrottled && ++sUploadedCount > UPLOAD_LIMIT) {
                 return;
@@ -207,6 +209,10 @@ public abstract class UploadedTexture extends BasicTexture {
         return sUploadedCount > UPLOAD_LIMIT;
     }
 
+    /**
+     * @param canvas
+     * 把材质绑定到canvas上
+     */
     private void uploadToCanvas(GLCanvas canvas) {
 
         Bitmap bitmap = getBitmap();
@@ -224,7 +230,7 @@ public abstract class UploadedTexture extends BasicTexture {
                 // Upload the bitmap to a new texture.
                 mId = canvas.getGLId().generateTexture();
                 canvas.setTextureParameters(this);
-
+                // 如果图片尺寸与当前材质尺寸一致，那么
                 if (bWidth == texWidth && bHeight == texHeight) {
                     canvas.initializeTexture(this, bitmap);
                 } else {

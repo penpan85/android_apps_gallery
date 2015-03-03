@@ -933,8 +933,10 @@ public class GLES20Canvas implements GLCanvas {
     public void texSubImage2D(BasicTexture texture, int xOffset, int yOffset, Bitmap bitmap,
             int format, int type) {
         int target = texture.getTarget();
+        // 通知gl库使用这个材质
         GLES20.glBindTexture(target, texture.getId());
         checkError();
+        // 绑定bitmap与其相应的材质
         GLUtils.texSubImage2D(target, 0, xOffset, yOffset, bitmap, format, type);
     }
 

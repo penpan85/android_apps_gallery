@@ -38,16 +38,21 @@ import java.util.ArrayList;
 // so it make the animation more smooth and prevents jank.
 /**
  * @author pengpan
- * 与bitmapTexture类似
+ * 与bitmapTexture类似，不同的是，TiledTexture会把bitmap分割成几个瓦片，可能会增加获取整
+ * 张图片的时间，但能够减少每个瓦片上载图片的时间，这样做也是为了让动画更加平滑
  */
 public class TiledTexture implements Texture {
+	//瓦片的像素宽高
     private static final int CONTENT_SIZE = 254;
+    //边缘宽度
     private static final int BORDER_SIZE = 1;
+    //瓦片整体宽高
     private static final int TILE_SIZE = CONTENT_SIZE + 2 * BORDER_SIZE;
     private static final int INIT_CAPACITY = 8;
 
     // We are targeting at 60fps, so we have 16ms for each frame.
     // In this 16ms, we use about 4~8 ms to upload tiles.
+    // 预定帧率是60，每帧有16ms时间，在这16ms内，我们利用4-8ms上载瓦片
     private static final long UPLOAD_TILE_LIMIT = 4; // ms
 
     private static Tile sFreeTileHead = null;
@@ -67,6 +72,10 @@ public class TiledTexture implements Texture {
     private final RectF mSrcRect = new RectF();
     private final RectF mDestRect = new RectF();
 
+    /**
+     * @author pengpan
+     * 用来在gl空闲的时候上载瓦片
+     */
     public static class Uploader implements OnGLIdleListener {
         private final ArrayDeque<TiledTexture> mTextures =
                 new ArrayDeque<TiledTexture>(INIT_CAPACITY);
@@ -91,6 +100,10 @@ public class TiledTexture implements Texture {
             mGlRoot.addOnGLIdleListener(this);
         }
 
+        /* (non-Javadoc)
+         * @see com.android.gallery3d.ui.GLRoot.OnGLIdleListener#onGLIdle(com.android.gallery3d.glrenderer.GLCanvas, boolean)
+         * 当GL空闲时间大于上限，预加载下一个tile
+         */
         @Override
         public boolean onGLIdle(GLCanvas canvas, boolean renderRequested) {
             ArrayDeque<TiledTexture> deque = mTextures;
@@ -113,9 +126,13 @@ public class TiledTexture implements Texture {
         }
     }
 
+    /**
+     * @author pengpan
+     * 某一片瓦片
+     */
     private static class Tile extends UploadedTexture {
-        public int offsetX;
-        public int offsetY;
+        public int offsetX;//相对于bitmap的x方向偏移量
+        public int offsetY;//相对于bitmap的y方向偏移量
         public Bitmap bitmap;
         public Tile nextFreeTile;
         public int contentWidth;
@@ -181,6 +198,11 @@ public class TiledTexture implements Texture {
         }
     }
 
+    /**
+     * @param canvas
+     * @return
+     * 上载下一个tile
+     */
     private boolean uploadNextTile(GLCanvas canvas) {
         if (mUploadIndex == mTiles.length) return true;
 
@@ -189,14 +211,18 @@ public class TiledTexture implements Texture {
 
             // Make sure tile has not already been recycled by the time
             // this is called (race condition in onGLIdle)
+            // 确保瓦片再这个函数被调用前还没有被回收
             if (next.bitmap != null) {
                 boolean hasBeenLoad = next.isLoaded();
+                //初始化材质，并绑定到canvas上去
                 next.updateContent(canvas);
 
                 // It will take some time for a texture to be drawn for the first
                 // time. When scrolling, we need to draw several tiles on the screen
                 // at the same time. It may cause a UI jank even these textures has
                 // been uploaded.
+                // 瓦片在第一次绘制时耗时较长，当被滑动时，我们需要同时在屏幕上绘制几个瓦片，甚至这些瓦片被上载
+                // 后也可能导致卡顿
                 if (!hasBeenLoad) next.draw(canvas, 0, 0);
             }
         }
@@ -207,7 +233,7 @@ public class TiledTexture implements Texture {
         mWidth = bitmap.getWidth();
         mHeight = bitmap.getHeight();
         ArrayList<Tile> list = new ArrayList<Tile>();
-
+        // 对bitmap进行瓦片式分解，一列一列地分解
         for (int x = 0, w = mWidth; x < w; x += CONTENT_SIZE) {
             for (int y = 0, h = mHeight; y < h; y += CONTENT_SIZE) {
                 Tile tile = obtainTile();

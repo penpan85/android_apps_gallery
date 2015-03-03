@@ -1,0 +1,199 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+    
+       <style name="ww">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ow">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1.0</item>
+    </style>
+
+    <style name="af">
+        <item name="android:layout_width">0.0dip</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
+    <style name="ff">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+    
+     <style name="fw">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+     <style name="U17_1ST_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_333333</item>
+        <item name="android:textSize">@dimen/u17_21sp</item>
+    </style>
+
+    <style name="U17_2ND_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_333333</item>
+        <item name="android:textSize">@dimen/u17_19sp</item>
+    </style>
+
+    <style name="U17_3RD_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_666666</item>
+        <item name="android:textSize">@dimen/u17_19sp</item>
+    </style>
+
+    <style name="U17_4TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_c86004</item>
+        <item name="android:textSize">@dimen/u17_19sp</item>
+    </style>
+
+    <style name="U17_5TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_2387ed</item>
+        <item name="android:textSize">@dimen/u17_19sp</item>
+    </style>
+
+    <style name="U17_6TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_648901</item>
+        <item name="android:textSize">@dimen/u17_19sp</item>
+    </style>
+
+    <style name="U17_7TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_333333</item>
+        <item name="android:textSize">@dimen/u17_17sp</item>
+    </style>
+
+    <style name="U17_8TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_333333</item>
+        <item name="android:textSize">@dimen/u17_16sp</item>
+    </style>
+
+    <style name="U17_9TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_666666</item>
+        <item name="android:textSize">@dimen/u17_16sp</item>
+    </style>
+
+    <style name="U17_10TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_999999</item>
+        <item name="android:textSize">@dimen/u17_16sp</item>
+    </style>
+
+    <style name="U17_11TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_648901</item>
+        <item name="android:textSize">@dimen/u17_16sp</item>
+    </style>
+
+    <style name="U17_12TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_ff0101</item>
+        <item name="android:textSize">@dimen/u17_16sp</item>
+    </style>
+
+    <style name="U17_13RD_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_333333</item>
+        <item name="android:textSize">@dimen/u17_15sp</item>
+    </style>
+
+
+    <style name="U17_15TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_333333</item>
+        <item name="android:textSize">@dimen/u17_13sp</item>
+    </style>
+        <style name="U17_14TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_333333</item>
+        <item name="android:textSize">@dimen/u17_14sp</item>
+    </style>
+
+    <style name="U17_16TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_999999</item>
+        <item name="android:textSize">@dimen/u17_13sp</item>
+    </style>
+
+    <style name="U17_17TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_333333</item>
+        <item name="android:textSize">@dimen/u17_12sp</item>
+    </style>
+
+    <style name="U17_18TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_666666</item>
+        <item name="android:textSize">@dimen/u17_12sp</item>
+    </style>
+
+    <style name="U17_19TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_999999</item>
+        <item name="android:textSize">@dimen/u17_12sp</item>
+    </style>
+
+    <style name="U17_20TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_ff0101</item>
+        <item name="android:textSize">@dimen/u17_12sp</item>
+    </style>
+
+    <style name="U17_21TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_2387ed</item>
+        <item name="android:textSize">@dimen/u17_12sp</item>
+    </style>
+
+    <style name="U17_22TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_648901</item>
+        <item name="android:textSize">@dimen/u17_12sp</item>
+    </style>
+
+    <style name="U17_23TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_999999</item>
+        <item name="android:textSize">@dimen/u17_11sp</item>
+    </style>
+
+    <style name="U17_24TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_ffffff</item>
+        <item name="android:textSize">@dimen/u17_29sp</item>
+    </style>
+
+    <style name="U17_25TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_ffffff</item>
+        <item name="android:textSize">@dimen/u17_21sp</item>
+    </style>
+
+    <style name="U17_26TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_ffffff</item>
+        <item name="android:textSize">@dimen/u17_16sp</item>
+    </style>
+
+    <style name="U17_27TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_ffffff</item>
+        <item name="android:textSize">@dimen/u17_13sp</item>
+    </style>
+
+    <style name="U17_28TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_ffffff</item>
+        <item name="android:textSize">@dimen/u17_12sp</item>
+    </style>
+
+    <style name="U17_29TH_FONT" parent="@style/ww">
+        <item name="android:textColor">@color/u17_ffffff</item>
+        <item name="android:textSize">@dimen/u17_10sp</item>
+    </style>
+    
+       <style name="custom_list">
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:fadingEdgeLength">0.0dip</item>
+        <item name="android:listSelector">@null</item>
+        <item name="android:drawSelectorOnTop">false</item>
+        <item name="android:cacheColorHint">#00000000</item>
+        <item name="android:smoothScrollbar">false</item>
+    </style>
+</resources>
