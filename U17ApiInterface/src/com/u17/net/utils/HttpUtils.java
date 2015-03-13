@@ -41,8 +41,8 @@ import android.os.Build;
 import android.text.TextUtils;
 
 import com.u17.net.Request;
-import com.u17.net.model.U17request;
-import com.u17.net.model.VisitResult;
+import com.u17.net.U17request;
+import com.u17.net.VisitResult;
 
 
 /**
@@ -154,16 +154,17 @@ public class HttpUtils {
 						// if(isDebug){ULog.record( TAG+" loadDataFromUrl",
 						// "current net is wap:"+proxyStr);}
 					}
-					ULog.record("httputils", "now start execute request:"+requestUrl);
+					//ULog.record("httputils", "now start execute request:"+requestUrl);
 					HttpResponse response = client.execute(request);
-					ULog.record("httputils", "now end execute request:"+requestUrl+"\r\n");
+					//ULog.record("httputils", "now end execute request:"+requestUrl+"\r\n");
 					code = response.getStatusLine().getStatusCode();
 					//ULog.record(TAG + "loadDataFromUrl","code:"+code);
 					if (code == HttpStatus.SC_OK) {
 						HttpEntity entity = response.getEntity();
 						long length = entity.getContentLength();
+						if (u17Request != null)
 						u17Request.setRequestGetDataBeginTime(System.currentTimeMillis());
-						ULog.record("httputils","data length:"+length);
+					//	ULog.record("httputils","data length:"+length);
 						long curByteNum = 0;
 						if (useGizp
 								&& entity.getContentEncoding() != null
@@ -186,23 +187,28 @@ public class HttpUtils {
 						while ((requestResult=bufferedReader.readLine())!=null) {
 							sb.append(requestResult);
 						}
-						u17Request.setRequestGetDataEndTime(System.currentTimeMillis());
+						if (u17Request != null)
+							u17Request.setRequestGetDataEndTime(System.currentTimeMillis());
 						requestResult=sb.toString();
 						if (!TextUtils.isEmpty(requestResult)) {
-							visitResult.setCode(1);
-							visitResult.setResult(requestResult);
+							visitResult.setCode(NETVISITOR_NORMAL);
+							visitResult.setContent(requestResult);
 							isDownNormal = true;
-							u17Request.setRetryCount(curRetryTime);
-							u17Request.setDataLength(requestResult.length());
+							if (u17Request != null) {
+								u17Request.setRetryCount(curRetryTime);
+								u17Request.setDataLength(requestResult.length());
+							}
 							ULog.record("httputils", "request setcode and setRetryCount:"+curRetryTime+","+requestResult.length());
 						}
 					} else {
 						isDownNormal = false;
 						visitResult.setCode(NETVISITOR_ERROR_SERVER);
 						visitResult.setMessage("错误的HTTP状态" + code);
-						u17Request.setRetryCount(curRetryTime);
-						u17Request.setRequestGetDataEndTime(System.currentTimeMillis());
-						u17Request.setException("错误的HTTP状态" + code);
+						if (u17Request != null) {
+							u17Request.setRetryCount(curRetryTime);
+							u17Request.setRequestGetDataEndTime(System.currentTimeMillis());
+							u17Request.setException("错误的HTTP状态" + code);
+						}
 					}
 
 				} catch (Exception ex) {
@@ -212,23 +218,29 @@ public class HttpUtils {
 						//ULog.record( TAG, "读取数据超时,请稍后重试");
 						visitResult.setCode(NETVISITOR_ERROR_TIMEOUT);
 						visitResult.setMessage(ex.getMessage());
-						u17Request.setRequestGetDataEndTime(System.currentTimeMillis());
-						u17Request.setRetryCount(curRetryTime);
-						u17Request.setException(ex.getMessage());
+						if (u17Request != null) {
+							u17Request.setRequestGetDataEndTime(System.currentTimeMillis());
+							u17Request.setRetryCount(curRetryTime);
+							u17Request.setException(ex.getMessage());
+						}
 					} else if (ex instanceof ConnectTimeoutException) {
 					   // ULog.record( TAG, "连接超时,请稍后重试");
 						visitResult.setCode(NETVISITOR_ERROR_TIMEOUT);
 						visitResult.setMessage(ex.getMessage());
-						u17Request.setRetryCount(curRetryTime);
-						u17Request.setRequestGetDataEndTime(System.currentTimeMillis());
-						u17Request.setException(ex.getMessage());
+						if (u17Request != null) {
+							u17Request.setRetryCount(curRetryTime);
+							u17Request.setRequestGetDataEndTime(System.currentTimeMillis());
+							u17Request.setException(ex.getMessage());
+						}
 					} else {
 						//ULog.record( TAG,"未知错误,请点击重试"+ex.getMessage()); 
 						visitResult.setCode(NETVISITOR_ERROR_OTHER);
 						visitResult.setMessage(ex.getMessage());
-						u17Request.setRetryCount(curRetryTime);
-						u17Request.setRequestGetDataEndTime(System.currentTimeMillis());
-						u17Request.setException(ex.getMessage());
+						if (u17Request != null) {
+							u17Request.setRetryCount(curRetryTime);
+							u17Request.setRequestGetDataEndTime(System.currentTimeMillis());
+							u17Request.setException(ex.getMessage());
+						}
 					}
 					
 				} finally {

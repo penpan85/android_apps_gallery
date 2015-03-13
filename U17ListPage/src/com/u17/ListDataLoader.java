@@ -1,7 +1,7 @@
 package com.u17;
 
-import java.android.support.v4.app.LoaderManager;
-import java.android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import java.util.List;
 
 import com.u17.net.model.ComicListItem;
@@ -107,15 +107,24 @@ import android.support.v4.content.Loader;
  *	public abstract <D> Loader<D> getLoader(int id);
  *
  */
-public class ListDataLoader extends AsyncTaskLoader<List<ComicListItem>>{
+public class ListDataLoader<T> extends AsyncTaskLoader<List<T>>{
 
-	
+	public static final String BUNDLE_KEY_PAGEINDEX = "com.u17.adapter.PaginatedListAdapter.pageindex";
+	public ListDataLoader(Context context,Bundle args) {
+		this(context);
+		
+	}
 	public ListDataLoader(Context context) {
 		super(context);
 	}
 	
+	public static Bundle newArgs (int index) {
+		Bundle bundle = new Bundle();
+		bundle.putInt(BUNDLE_KEY_PAGEINDEX, index);
+		return bundle;
+	}
 	@Override
-	public void deliverResult(List<ComicListItem> data) {
+	public void deliverResult(List<T> data) {
 		super.deliverResult(data);
 	}
 	
@@ -211,8 +220,8 @@ public class ListDataLoader extends AsyncTaskLoader<List<ComicListItem>>{
 	}
 	
 	@Override
-	public List<ComicListItem> loadInBackground() {
-		
+	public List<T> loadInBackground() {
+		String url = CoreApi.
 		return null;
 	}
 
