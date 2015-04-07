@@ -1,6 +1,6 @@
 package com.android.gallery3d.util;
 
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 
 import android.app.Activity;
 import android.content.res.Configuration;

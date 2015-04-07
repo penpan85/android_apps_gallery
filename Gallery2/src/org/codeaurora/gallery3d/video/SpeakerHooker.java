@@ -39,10 +39,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
-import android.media.AudioSystem;
+// import android.media.AudioSystem;
 import android.os.Bundle;
 
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 
 public class SpeakerHooker extends MovieHooker {
 
@@ -168,16 +168,16 @@ public class SpeakerHooker extends MovieHooker {
             initAudioManager();
         }
         mAudioManager.setSpeakerphoneOn(true);
-        AudioSystem.setForceUse(AudioSystem.FOR_MEDIA,
-                AudioSystem.FORCE_SPEAKER);
+        /*AudioSystem.setForceUse(AudioSystem.FOR_MEDIA,
+                AudioSystem.FORCE_SPEAKER);*/
     }
 
     private void turnSpeakerOff() {
         if (mAudioManager == null) {
             initAudioManager();
         }
-        AudioSystem.setForceUse(AudioSystem.FOR_MEDIA,
-                AudioSystem.FORCE_NONE);
+       /* AudioSystem.setForceUse(AudioSystem.FOR_MEDIA,
+                AudioSystem.FORCE_NONE);*/
         mAudioManager.setSpeakerphoneOn(false);
     }
 

@@ -19,9 +19,6 @@ package com.android.gallery3d.filtershow.filters;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-
-import com.android.gallery3d.R;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;

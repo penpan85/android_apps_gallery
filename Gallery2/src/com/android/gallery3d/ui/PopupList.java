@@ -31,7 +31,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 
 import java.util.ArrayList;
 

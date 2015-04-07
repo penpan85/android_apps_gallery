@@ -32,7 +32,7 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 
 import java.util.ArrayList;
 

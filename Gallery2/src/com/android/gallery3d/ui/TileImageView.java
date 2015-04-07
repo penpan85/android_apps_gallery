@@ -179,7 +179,8 @@ public class TileImageView extends GLView {
 
     public void setModel(TileSource model) {
         mModel = model;
-        if (model != null) notifyModelInvalidated();
+        if (model != null) 
+        	notifyModelInvalidated();
     }
 
     public void setScreenNail(ScreenNail s) {
@@ -748,7 +749,8 @@ public class TileImageView extends GLView {
         }
 
         public Tile getParentTile() {
-            if (mTileLevel + 1 == mLevelCount) return null;
+            if (mTileLevel + 1 == mLevelCount) 
+            	return null;
             int size = sTileSize << (mTileLevel + 1);
             int x = size * (mX / size);
             int y = size * (mY / size);

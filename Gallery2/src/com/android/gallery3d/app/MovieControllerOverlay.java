@@ -41,7 +41,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 import com.android.gallery3d.app.CommonControllerOverlay.State;
 import org.codeaurora.gallery3d.ext.IContrllerOverlayExt;
 import org.codeaurora.gallery3d.video.IControllerRewindAndForward;

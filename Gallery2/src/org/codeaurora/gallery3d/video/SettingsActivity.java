@@ -9,7 +9,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemProperties;
+// import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -27,7 +27,7 @@ import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 
 import java.util.ArrayList;
 
@@ -68,8 +68,10 @@ public class SettingsActivity extends PreferenceActivity {
     private static final String RTP_PORTS_PROPERTY_NAME = "persist.env.media.rtp-ports";
     private static final String CACHE_PROPERTY_NAME = "persist.env.media.cache-params";
 
-    private boolean mUseNvOperatorForEhrpd = SystemProperties.getBoolean(
-            "persist.radio.use_nv_for_ehrpd", false);
+   /* private boolean mUseNvOperatorForEhrpd = SystemProperties.getBoolean(
+            "persist.radio.use_nv_for_ehrpd", false);*/
+    // && 无法获取 systemproperties 类，用默认值代替
+    private boolean mUseNvOperatorForEhrpd = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -187,14 +189,15 @@ public class SettingsActivity extends PreferenceActivity {
         ArrayList<String> result = new ArrayList<String>();
         String mccMncFromSim = null;
         if (mUseNvOperatorForEhrpd) {
-            String mccMncForEhrpd = SystemProperties.get("ro.cdma.home.operator.numeric", null);
-            if (mccMncForEhrpd != null && mccMncForEhrpd.length() > 0) {
+          //  && 无法获取SystemProperties 类
+          //  String mccMncForEhrpd = SystemProperties.get("ro.cdma.home.operator.numeric", null);
+        	String mccMncForEhrpd = "";
+        	if (mccMncForEhrpd != null && mccMncForEhrpd.length() > 0) {
                 result.add(mccMncForEhrpd);
             }
         }
-
-        mccMncFromSim = TelephonyManager.getDefault().getSimOperator();
-
+        //  && 无法获取TelephonyManager 类
+        //mccMncFromSim = TelephonyManager.getDefault().getSimOperator();
         if (mccMncFromSim != null && mccMncFromSim.length() > 0) {
             result.add(mccMncFromSim);
         }
@@ -209,7 +212,8 @@ public class SettingsActivity extends PreferenceActivity {
         // System property format: "rtpMinPort/rtpMaxPort"
         final String propertyValue = rtpMinPortStr + "/" + rtpMaxPortStr;
         Log.v(LOG_TAG, "set system property " + RTP_PORTS_PROPERTY_NAME + " : " + propertyValue);
-        SystemProperties.set(RTP_PORTS_PROPERTY_NAME, propertyValue);
+        // && 无法获取 SystemProperties
+        //SystemProperties.set(RTP_PORTS_PROPERTY_NAME, propertyValue);
     }
 
     private void enableBufferSetting() {
@@ -227,7 +231,8 @@ public class SettingsActivity extends PreferenceActivity {
         final String propertyValue = (DEFAULT_CACHE_MIN_SIZE / 1024) + "/" +
                 (cacheMaxSize / 1024) + "/" + DEFAULT_KEEP_ALIVE_INTERVAL_SECOND;
         Log.v(LOG_TAG, "set system property " + CACHE_PROPERTY_NAME + " : " + propertyValue);
-        SystemProperties.set(CACHE_PROPERTY_NAME, propertyValue);
+        // && 无法获取 SystemProperties
+        // SystemProperties.set(CACHE_PROPERTY_NAME, propertyValue);
     }
     
     private void setPreferenceListener(final int which, final EditTextPreference etp) {
@@ -297,8 +302,9 @@ public class SettingsActivity extends PreferenceActivity {
 
                 int subscription = 0;
                 try {
-                    subscription = Settings.Global.getInt(SettingsActivity.this.getContentResolver(),
-                            Settings.Global.MULTI_SIM_DATA_CALL_SUBSCRIPTION);
+                	// && 无法获取 Settings.Global
+                    /*subscription = Settings.Global.getInt(SettingsActivity.this.getContentResolver(),
+                            Settings.Global.MULTI_SIM_DATA_CALL_SUBSCRIPTION);*/
                     intent.putExtra(SUBSCRIPTION_KEY, subscription);
                 } catch (Exception e) {
                     Log.d("SettingActivity", "Can't get subscription for Exception" + e);

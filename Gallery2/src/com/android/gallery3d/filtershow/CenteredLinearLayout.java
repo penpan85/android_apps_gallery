@@ -23,7 +23,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.LinearLayout;
 
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 
 public class CenteredLinearLayout extends LinearLayout {
     private final int mMaxWidth;

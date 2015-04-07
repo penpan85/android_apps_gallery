@@ -31,7 +31,7 @@ import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 
 public class IconView extends View {
 

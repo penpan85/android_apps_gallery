@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 
 public class StereoAudioHooker extends MovieHooker {
     private static final String TAG = "StereoAudioHooker";

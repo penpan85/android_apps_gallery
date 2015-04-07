@@ -24,7 +24,7 @@ import android.renderscript.RenderScript;
 import android.renderscript.Type;
 import android.util.Log;
 import android.content.res.Resources;
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 import com.android.gallery3d.filtershow.pipeline.PipelineInterface;
 
 public abstract class ImageFilterRS extends ImageFilter {

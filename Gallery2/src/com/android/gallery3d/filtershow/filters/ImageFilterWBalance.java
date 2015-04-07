@@ -16,7 +16,7 @@
 
 package com.android.gallery3d.filtershow.filters;
 
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 import com.android.gallery3d.filtershow.editors.ImageOnlyEditor;
 
 import android.graphics.Bitmap;

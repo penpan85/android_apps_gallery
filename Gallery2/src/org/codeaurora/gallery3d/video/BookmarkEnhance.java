@@ -8,7 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 
 public class BookmarkEnhance {
     private static final String TAG = "BookmarkEnhance";

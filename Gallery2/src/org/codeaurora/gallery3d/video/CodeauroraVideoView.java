@@ -221,8 +221,10 @@ public class CodeauroraVideoView extends SurfaceView implements MediaPlayerContr
                 }
                 //Here we can get meta data from mediaplayer.
                 // Get the capabilities of the player for this stream
-                final Metadata data = mp.getMetadata(MediaPlayer.METADATA_ALL,
-                                          MediaPlayer.BYPASS_METADATA_FILTER);
+                // &&　无法得到metadata,注释
+                /*final Metadata data = mp.getMetadata(MediaPlayer.METADATA_ALL,
+                                         MediaPlayer.BYPASS_METADATA_FILTER);*/
+                final Metadata data = null;
                 if (data != null) {
                     mCanPause = !data.has(Metadata.PAUSE_AVAILABLE)
                             || data.getBoolean(Metadata.PAUSE_AVAILABLE);
@@ -277,7 +279,8 @@ public class CodeauroraVideoView extends SurfaceView implements MediaPlayerContr
                  * longer have a window, don't bother showing the user an error.
                  */
                 if (getWindowToken() != null) {
-                    final Resources r = mContext.getResources();
+                	// && 此段 无法正常编译的太多，注释
+                    /*final Resources r = mContext.getResources();
                     int messageId;
 
                     if (frameworkErr == MediaPlayer.MEDIA_ERROR_NOT_VALID_FOR_PROGRESSIVE_PLAYBACK) {
@@ -290,16 +293,16 @@ public class CodeauroraVideoView extends SurfaceView implements MediaPlayerContr
                         .setPositiveButton(com.android.internal.R.string.VideoView_error_button,
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
-                                        /* If we get here, there is no onError listener, so
+                                         If we get here, there is no onError listener, so
                                          * at least inform them that the video is over.
-                                         */
+                                         
                                         if (mOnCompletionListener != null) {
                                             mOnCompletionListener.onCompletion(mMediaPlayer);
                                         }
                                     }
                                 })
                         .setCancelable(false)
-                        .show();
+                        .show();*/
                 }
                 return true;
             }
@@ -478,7 +481,8 @@ public class CodeauroraVideoView extends SurfaceView implements MediaPlayerContr
             mMediaPlayer.setOnInfoListener(mOnInfoListener);
             mMediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
             mCurrentBufferPercentage = 0;
-            mMediaPlayer.setDataSource(mContext, mUri, mHeaders);
+            // && mContext 无法直接得到，改成　getContext() 
+            mMediaPlayer.setDataSource(getContext(), mUri, mHeaders);
             mMediaPlayer.setDisplay(mSurfaceHolder);
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mMediaPlayer.setScreenOnWhilePlaying(true);

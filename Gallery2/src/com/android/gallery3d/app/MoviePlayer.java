@@ -31,7 +31,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.Metadata;
 import android.media.audiofx.AudioEffect;
 import android.media.audiofx.Virtualizer;
 import android.net.Uri;
@@ -46,7 +45,7 @@ import android.view.ViewGroup;
 import android.widget.VideoView;
 import android.widget.Toast;
 
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 import com.android.gallery3d.common.ApiHelper;
 import com.android.gallery3d.common.BlobCache;
 import com.android.gallery3d.util.CacheManager;
@@ -925,16 +924,21 @@ public class MoviePlayer implements
         return false;
     }
 
+    /**
+     * @param mp
+     * && metadata 不在 框架内，先注释掉
+     */
     private void getVideoInfo(MediaPlayer mp) {
         if (!MovieUtils.isLocalFile(mMovieItem.getUri(), mMovieItem.getMimeType())) {
-            Metadata data = mp.getMetadata(MediaPlayer.METADATA_ALL,
+        	/*Metadata data = mp.getMetadata(MediaPlayer.METADATA_ALL,
                     MediaPlayer.BYPASS_METADATA_FILTER);
             if (data != null) {
                 // TODO comments by sunlei
                 mServerTimeoutExt.setVideoInfo(data);
             } else {
-                Log.w(TAG, "Metadata is null!");
-            }
+                
+            }*/
+            Log.w(TAG, "Metadata is null!");
         }
     }
 
@@ -1390,8 +1394,12 @@ public class MoviePlayer implements
             return false;
         }
 
-        public void setVideoInfo(Metadata data) {
-            mServerTimeout = RESUME_DIALOG_TIMEOUT;
+        /**
+         * @param data
+         *  && metadata 不在框架内，将data类型临时改成 object 类型
+         */
+        public void setVideoInfo(Object data) {
+            /*mServerTimeout = RESUME_DIALOG_TIMEOUT;
             if (data.has(SERVER_TIMEOUT)) {
                 mServerTimeout = data.getInt(SERVER_TIMEOUT);
                 if (mServerTimeout == 0) {
@@ -1401,7 +1409,7 @@ public class MoviePlayer implements
                     Log.v(TAG, "get server timeout from metadata. mServerTimeout="
                             + mServerTimeout);
                 }
-            }
+            }*/
         }
 
         @Override

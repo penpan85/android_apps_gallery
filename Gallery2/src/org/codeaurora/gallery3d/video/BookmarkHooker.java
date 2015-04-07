@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 import org.codeaurora.gallery3d.ext.MovieUtils;
 
 public class BookmarkHooker extends MovieHooker {

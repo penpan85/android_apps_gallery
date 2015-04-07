@@ -18,7 +18,7 @@ package com.android.gallery3d.ui;
 
 import android.content.Context;
 
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 import com.android.gallery3d.glrenderer.GLCanvas;
 import com.android.gallery3d.glrenderer.ResourceTexture;
 

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.android.gallery3d.R;
+import com.test.android.gallery3d.R;
 import com.android.gallery3d.app.MovieActivity;
 import org.codeaurora.gallery3d.ext.ActivityHooker;
 import org.codeaurora.gallery3d.video.VideoSettingsActivity;

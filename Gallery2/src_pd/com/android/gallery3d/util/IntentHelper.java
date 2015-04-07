@@ -27,6 +27,6 @@ public class IntentHelper {
 
     public static Intent getGalleryIntent(Context context) {
         return new Intent(Intent.ACTION_MAIN)
-            .setClassName("com.android.gallery3d", "com.android.gallery3d.app.GalleryActivity");
+            .setClassName("com.test.android.gallery3d", "com.android.gallery3d.app.GalleryActivity");
     }
 }
