@@ -156,7 +156,8 @@ public class GLRootView extends GLSurfaceView
         if (ApiHelper.USE_888_PIXEL_FORMAT) {
         //指定 r g b alpha depth stencil的位数
         //相当于 bitmapconfig.8888
-            setEGLConfigChooser(8, 8, 8, 0, 0, 0);
+            // setEGLConfigChooser(8, 8, 8, 0, 0, 0);
+        	setEGLConfigChooser(8, 8, 8, 8, 16, 0);
         } else {
         //相当于bitmapconfig.565
             setEGLConfigChooser(5, 6, 5, 0, 0, 0);
