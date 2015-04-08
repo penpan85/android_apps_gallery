@@ -28,6 +28,8 @@ public class FilterStackDBHelper extends SQLiteOpenHelper {
 
     public static interface FilterStack {
         /** The row uid */
+    	
+    	
         public static final String _ID = "_id";
         /** The table name */
         public static final String TABLE = "filterstack";
