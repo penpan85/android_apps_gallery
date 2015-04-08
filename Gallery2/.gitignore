@@ -5,7 +5,6 @@
 **/*.iml
 .settings/
 bin/
-libs/
 gen/
 .idea/
 project.properties
